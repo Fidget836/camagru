@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: 
+      context: ./web
+    volumes:
+      - ./web:/var/www/html
+    ports:
+      - "8080:80"
+      - "8443:443"
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    build: ./db
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+    # restart: always
+
+volumes:
+  db_data:

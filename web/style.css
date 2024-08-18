@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/******** Home ********/
+.home {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+/******** Header ********/
+
+.header {
+    background: red;
+    width: 100vw;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+
+
+/******** Main ********/
+.main {
+    width: 40vw;
+    min-height: 93vh;
+    background: pink;
+}

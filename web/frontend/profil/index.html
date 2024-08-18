@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./frontend/profil/style.css">
+    <title>Profil</title>
+</head>
+<body>
+    <div class="profil">
+        <div class="header">
+            <h2> <a href="/">Camagru</a> </h2>
+            <h3>Profil</h3>
+        </div>
+
+        <div class="main">
+            <div class="login" id="login">
+                <div class="loginLeft">
+                    <h2>Login</h2>
+                    <form id="formLogin">
+                        <input type="text" id="usernameLogin" placeholder="Username">
+                        <input type="password" id="passwordLogin" placeholder="Password">
+                        <p id="constrainedPassword">[Need at least 12 characters, one capital letter, one lowercase letter, one number and one special character]</p>
+                        <span id="errorLogin"></span>
+                        <input type="submit" value="Login" id="submitLogin">
+                    </form>
+                </div>
+                <div class="loginRight">
+                    <h2>Not yet register ?</h2>
+                    <p>Join the social network !</p>
+                    <button id="btnLoginToRegister">Register</button>
+                </div>
+            </div>
+
+
+
+            <div class="register invisible" id="register">
+                <div class="loginLeft">
+                    <h2>Already have an account?</h2>
+                    <p>Connect to your account !</p>
+                    <button id="btnRegisterToLogin">Login</button>
+                </div>
+                <div class="loginRight">
+                    <h2>Register</h2>
+                    <form id="formRegister">
+                        <input type="text"  name="usernameRegister" id="usernameRegister" placeholder="Username">
+                        <input type="email" name="emailRegister" id="emailRegister" placeholder="Email">
+                        <input type="password" name="passwordRegister" id="passwordRegister" placeholder="Password">
+                        <input type="password" name="confirmPasswordRegister" id="confirmPasswordRegister" placeholder="Confirm Password">
+                        <p id="constrainedPassword">[Need at least 12 characters, one capital letter, one lowercase letter, one number and one special character]</p>
+                        <span id="errorRegister"></span>
+                        <input type="submit" value="Register" id="submitRegister">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./frontend/profil/script.js"></script>
+</body>
+</html>
