@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /***** Form Register*****/
     const formRegister = document.getElementById('formRegister');
+    const formLogin = document.getElementById('formLogin');
 
     btnLoginToRegister.addEventListener('click', () => {
         login.classList.add('invisible');
@@ -29,15 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = formData.get('confirmPasswordRegister');
 
 
-        const response = await fetch("https://localhost:8443/backend/register.php", {
+        const response = await fetch("https://localhost:8443/backend/views/register.php", {
             method: 'POST',
             body: formData
         });
         const data = await response.json();
 
         if (data.status === 'error') {
-            console.log('RENTRE DANS ERREUR ' + data.message);
-            
             errorRegister.innerHTML = '<p class="errorStyle">' + data.message + '</p>';
             setTimeout(() => {
                 errorRegister.innerHTML = '';
@@ -45,6 +44,27 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             window.location.href = '/';
         }
+
+        formLogin.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(formLogin);
+
+            const username = formData.get('usernameLogin');
+            const password = formData.get('passwordLogin');
+
+            const response = await fetch ("https://localhost:8443/backend/views/login.php", {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+            console.log('RENTRE DANS LOGIN\n');
+            
+            console.log(data);
+            
+        });
     });
 
     /***** Form Login*****/

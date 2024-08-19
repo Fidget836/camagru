@@ -16,7 +16,7 @@ fclean :
 	docker image rm $$(docker images -q)
 
 cleanVolume :
-	docker volume rm camagru_db_data
+	docker volume rm ft_camagru_db_data
 
 re : fclean all
 
