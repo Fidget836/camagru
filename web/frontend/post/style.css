@@ -36,8 +36,17 @@
     width: 60%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     background: green;
+    padding: 15px;
+}
+
+#video {
+    width: 500px;
+    height: 375px;
+    background: grey;
 }
 
 .stickers {
