@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userModel = new AuthModel($db);
     $userModel->register($username, $email, $password);
     $db->closeDb();
-
 }
 
 ?>

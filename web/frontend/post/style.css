@@ -1,0 +1,49 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.postPage {
+    width: 100vw;
+    height: 100vh;
+}
+
+.header {
+    width: 100vw;
+    height: 7vh;
+    background: #91ffff;
+    color: #08a4a7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main {
+    width: 100vw;
+    min-height: 93vh;
+    display: flex;
+}
+
+.pictures {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background: pink;
+}
+
+.webcam {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background: green;
+}
+
+.stickers {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background: blue;
+}

@@ -18,7 +18,8 @@
 /******** Header ********/
 
 .header {
-    background: red;
+    background: #91ffff;
+    color: #08a4a7;
     width: 100vw;
     height: 7vh;
     display: flex;
@@ -26,6 +27,39 @@
     justify-content: space-evenly;
 }
 
+.postHeader {
+    width: 33.33%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    width: 33.33%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth {
+    width: 33.33%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.btnAuth {
+    width: 100px;
+    height: 35px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: #08a4a7;
+    cursor: pointer;
+}
 
 
 /******** Main ********/

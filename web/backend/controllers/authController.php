@@ -5,6 +5,7 @@ class AuthController {
     private $stmt = null;
     private $count = 0;
     private $result = null;
+    private $hashPassword = null;
 
     // Variables ext
     private $db;
@@ -34,7 +35,7 @@ class AuthController {
         $this->username = $username;
         $this->password = $password;
 
-        $this->emptyRegister();
+        $this->emptyLogin();
         $this->isValidPassword();
         $this->verifUser();
     }
@@ -42,6 +43,7 @@ class AuthController {
     private function emptyRegister() {
         if (empty($this->username) || empty($this->email) || empty($this->password) || empty($this->confirmPassword)) {
             echo json_encode(['status' => 'error', 'message' => 'All fields must be completed !']);
+            $this->db->closeDb();
             exit ;
         }
     }
@@ -49,6 +51,7 @@ class AuthController {
     private function emptyLogin() {
         if (empty($this->username) || empty($this->password)) {
             echo json_encode(['status' => 'error', 'message' => 'All fields must be completed !']);
+            $this->db->closeDb();
             exit ;
         }
     }
@@ -56,6 +59,7 @@ class AuthController {
     private function confirmPasswordEqual() {
         if ($this->password !== $this->confirmPassword) {
             echo json_encode(['status' => 'error', 'message' => 'Password and Password Confirmation must be the same !']);
+            $this->db->closeDb();
             exit ;
         }
     }
@@ -67,6 +71,7 @@ class AuthController {
             !preg_match('/[0-9]/', $this->password) ||
             !preg_match('/[\W_]/', $this->password) ) {
                 echo json_encode(['status' => 'error', 'message' => 'The password need at least 12 characters, one capital letter, one lowercase letter, one number and one special character']);
+                $this->db->closeDb();
                 exit ;
         }
     }
@@ -78,6 +83,7 @@ class AuthController {
         $this->count = $this->stmt->fetchColumn();
         if ($this->count > 0) {
             echo json_encode(['status' => 'error', 'message' => 'This username already exist !']);
+            $this->db->closeDb();
             exit ;
         }
     }
@@ -89,18 +95,37 @@ class AuthController {
         $this->count = $this->stmt->fetchColumn();
         if ($this->count > 0) {
             echo json_encode(['status' => 'error', 'message' => 'This email already exist !']);
+            $this->db->closeDb();
             exit ;
         }
     }
 
     private function verifUser() {
+        //Verif username
         $this->stmt = $this->db->conn->prepare("SELECT * FROM users WHERE username = :username");
         $this->stmt->bindParam(':username', $this->username);
         $this->stmt->execute();
-        $this->result = $this->stmt->fetchColumn();
+        $this->result = $this->stmt->fetch(PDO::FETCH_ASSOC);
 
-        echo json_encode($this->result);
-        exit ;
+        if ($this->result) {
+            $this->hashPassword = $this->result['password'];
+        } else {
+            echo json_encode(['status' => 'error', 'message' => "This username doesn't exist !"]);
+            $this->db->closeDb();
+            exit ;
+        }
+
+        //Verif Password
+        if (!password_verify($this->password, $this->hashPassword)) {
+            echo json_encode(['status' => 'error', 'message' => "Wrong password !"]);
+            $this->db->closeDb();
+            exit ;
+        }
+
+        // Store user information in session
+        $_SESSION['user_id'] = $this->result['id'];
+        $_SESSION['username'] = $this->username;
+        echo json_encode(['status' => 'success', 'message' => 'Login sucessful !']);
     }
 
 }
