@@ -27,38 +27,40 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const sticker = new Image();
     sticker.src = "https://localhost:8443/frontend/post/stickers/french_flag.png";
-
-    captureButton.addEventListener('click', () => {
+    
+    captureButton.addEventListener('click', async () => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        context.drawImage(sticker, 50, 340, sticker.width, sticker.height);
-
-
-
-
-        // Conversion de l'image en data URL (base64)
-        // const dataUrl = canvas.toDataURL('image/png');
-
-        // Affichage de l'image capturée dans un nouvel élément HTML (ou vous pouvez l'envoyer au serveur)
-                // photo.src = dataUrl;
-                // const img = document.createElement('img');
-                // img.src = dataUrl;
-                // document.body.appendChild(img);
-
-        // Envoyer l'image capturée au serveur via fetch
-        /*
-        fetch('/backend/savePhoto.php', {
-            method: 'POST',
-            body: JSON.stringify({ image: dataUrl }),
-            headers: {
-                'Content-Type': 'application/json'
+    
+        // Convertir l'image en data URL (base64)
+        const dataUrl = canvas.toDataURL('image/png');
+    
+        const formData = new FormData();
+        formData.append('photo', dataUrl);
+        formData.append('sticker', sticker.src);
+    
+        try {
+            const response = await fetch("https://localhost:8443/backend/views/photo.php", {
+                method: 'POST',
+                body: formData
+            });
+    
+            if (response.ok) {
+                const blob = await response.blob();
+                const imageUrl = URL.createObjectURL(blob);
+    
+                // Afficher l'image ou faire autre chose avec elle
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                document.body.appendChild(img);
+            } else {
+                console.error('Erreur lors de la génération de l\'image:', response.status, response.statusText);
             }
-        }).then(response => response.json())
-          .then(data => console.log(data))
-          .catch(error => console.error(error));
-        */
+        } catch (error) {
+            console.error('Erreur lors de la requête de fetch:', error);
+        }
+        
     });
 
 });
