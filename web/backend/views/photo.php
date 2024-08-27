@@ -49,9 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Superposer le sticker sur l'image de fond
         imagecopy($photo, $sticker, $destx, $desty, 0, 0, $stickerWidth, $stickerHeight);
 
+        /*** TEST ***/
+        $savePath = './final_image.jpeg';
+        if (imagejpeg($photo, $savePath, 100)) {
+            http_response_code(200);
+            echo 'Image enregistrée avec succès sur le serveur : ' . $savePath;
+        } else {
+            error_log('Erreur lors de l\'enregistrement de l\'image sur le serveur.');
+            http_response_code(500);
+            echo 'Erreur lors de l\'enregistrement de l\'image.';
+            exit ;
+        }
+
+
         // Envoyer l'image finale comme réponse
-        header('Content-Type: image/jpeg');
-        imagejpeg($photo, null, 100);
+    // header('Content-Type: image/jpeg');
+    // imagejpeg($photo, null, 100);
 
         // Libérer la mémoire
         imagedestroy($photo);
