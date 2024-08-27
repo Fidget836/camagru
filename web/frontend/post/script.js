@@ -32,32 +32,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        // context.drawImage(sticker, 0, 0, sticker.width, sticker.height);
     
         // Conversion de l'image en data URL (base64)
         const dataUrl = canvas.toDataURL('image/png');
     
         const formData = new FormData();
         formData.append('photo', dataUrl);
-        formData.append('sticker', sticker.src);
+        formData.append('sticker', "french_flag.png");
     
         const response = await fetch("https://localhost:8443/backend/views/photo.php", {
             method: 'POST',
             body: formData
         });
     
-        // if (response.ok) {
-        //     const blob = await response.blob();
-        //     const imageUrl = URL.createObjectURL(blob);
+        if (response.ok) {
+            const blob = await response.blob();
+            const imageUrl = URL.createObjectURL(blob);
             
-        //     // Créer une nouvelle image pour afficher le résultat
-        //     const resultImage = new Image();
-        //     resultImage.src = imageUrl;
+            // Créer une nouvelle image pour afficher le résultat
+            const resultImage = new Image();
+            resultImage.src = imageUrl;
             
-        //     // Ajouter l'image au document ou remplacer l'ancienne image
-        //     document.body.appendChild(resultImage);
-        // } else {
-        //     console.error('Erreur lors de la génération de l\'image:', response.statusText);
-        // }
+            // Ajouter l'image au document ou remplacer l'ancienne image
+            document.body.appendChild(resultImage);
+        } else {
+            console.error('Erreur lors de la génération de l\'image:', response.statusText);
+        }
     });
 
 });
