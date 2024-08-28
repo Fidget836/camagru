@@ -3,6 +3,7 @@ FROM php:8.1-fpm-alpine
 RUN apk add --no-cache nginx \
     && docker-php-ext-install pdo pdo_mysql
 
+# GD library for superimpose two picture
 RUN apk --no-cache add \
     freetype-dev \
     libjpeg-turbo-dev \

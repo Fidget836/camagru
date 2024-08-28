@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Doit etre en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
         window.location.href = '/';
-        return;
+        return ;
     }
 
 

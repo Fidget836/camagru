@@ -53,6 +53,12 @@
     width: 20%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     background: blue;
+}
+
+img {
+padding: 20px 0px;
 }

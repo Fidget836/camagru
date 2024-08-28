@@ -6,7 +6,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Décoder l'image de la webcam (base64)
         $photoData = str_replace('data:image/png;base64,', '', $photoData);
-        // $photoData = str_replace(' ', '+', $photoData);
         $photoDecoded = base64_decode($photoData);
 
         if ($photoDecoded === false) {
