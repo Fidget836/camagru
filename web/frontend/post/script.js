@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const captureButton = document.getElementById('btnCapture');
     const context = canvas.getContext('2d');
     const photo = document.getElementById('photo');
+    const radios = document.querySelectorAll('input[name="stickerChoice"]');    
 
     // Doit etre en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
@@ -26,9 +27,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const sticker = new Image();
-    sticker.src = "https://localhost:8443/frontend/post/stickers/french_flag.png";
-
+    
     captureButton.addEventListener('click', async () => {
+        console.log(radios);
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                console.log(radios[i].name);
+            }
+        };
+
+        sticker.src = "frontend/post/stickers/french_flag.png";
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
