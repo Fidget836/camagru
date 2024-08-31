@@ -20,7 +20,7 @@
 
 .main {
     width: 100vw;
-    min-height: 93vh;
+    /* min-height: 93vh; */
     display: flex;
 }
 
@@ -28,7 +28,9 @@
     width: 20%;
     /* height: 100%; */
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     background: pink;
 }
 
@@ -47,6 +49,10 @@
     width: 500px;
     height: 375px;
     background: grey;
+}
+
+#canvas {
+    display: none;
 }
 
 .stickers {

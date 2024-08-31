@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const photo = document.getElementById('photo');
     const radios = document.querySelectorAll('input[name="stickerChoice"]');   
     const pictureDiv = document.getElementById('pictures'); 
+    const webcamDiv = document.getElementById('webcam'); 
 
     // Doit etre en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
@@ -47,6 +48,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const formData = new FormData();
         formData.append('photo', dataUrl);
         formData.append('sticker', sticker);
+        formData.append('canvaWidth', canvas.width);
+        formData.append('canvaHeight', canvas.height);
     
         const response = await fetch("https://localhost:8443/backend/views/photo.php", {
             method: 'POST',
@@ -63,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             // Ajouter l'image au document ou remplacer l'ancienne image
             // document.body.appendChild(resultImage);
-            pictureDiv.appendChild(resultImage);
+            webcamDiv.appendChild(resultImage);
         } else {
             console.error('Erreur lors de la génération de l\'image:', response.statusText);
         }

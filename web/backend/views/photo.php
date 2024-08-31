@@ -4,9 +4,11 @@ include '../db/db.php';
 include '../models/photoModel.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['photo']) && isset($_POST['sticker'])) {
+    if (isset($_POST['photo']) && isset($_POST['sticker']) && isset($_POST['canvaWidth']) && isset($_POST['canvaHeight'])) {
         $photoData = $_POST['photo'];
         $stickerFilename = $_POST['sticker'];
+        $canvaWidth = $_POST['canvaWidth'];
+        $canvaHeight = $_POST['canvaHeight'];
 
         // Décoder l'image de la webcam (base64)
         $photoData = str_replace('data:image/png;base64,', '', $photoData);
@@ -46,8 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stickerHeight = imagesy($sticker);
 
         // Définir les coordonnées où le sticker sera placé sur l'image de fond
-        $destx = 150;
-        $desty = 50;
+        $destx = rand(0, $canvaWidth * 0.9);
+        $desty = rand(0, $canvaHeight * 0.9);
 
         // Superposer le sticker sur l'image de fond
         imagecopy($photo, $sticker, $destx, $desty, 0, 0, $stickerWidth, $stickerHeight);
