@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const captureButton = document.getElementById('btnCapture');
     const context = canvas.getContext('2d');
     const photo = document.getElementById('photo');
-    const radios = document.querySelectorAll('input[name="stickerChoice"]');    
+    const radios = document.querySelectorAll('input[name="stickerChoice"]');   
+    const pictureDiv = document.getElementById('pictures'); 
 
     // Doit etre en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
@@ -26,17 +27,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
     }
 
-    const sticker = new Image();
     
     captureButton.addEventListener('click', async () => {
-        console.log(radios);
+        let sticker = null;
         for (let i = 0; i < radios.length; i++) {
             if (radios[i].checked) {
-                console.log(radios[i].name);
+                sticker = radios[i].value;
             }
         };
 
-        sticker.src = "frontend/post/stickers/french_flag.png";
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -47,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
         const formData = new FormData();
         formData.append('photo', dataUrl);
-        formData.append('sticker', "french_flag.png");
+        formData.append('sticker', sticker);
     
         const response = await fetch("https://localhost:8443/backend/views/photo.php", {
             method: 'POST',
@@ -63,7 +62,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             resultImage.src = imageUrl;
             
             // Ajouter l'image au document ou remplacer l'ancienne image
-            document.body.appendChild(resultImage);
+            // document.body.appendChild(resultImage);
+            pictureDiv.appendChild(resultImage);
         } else {
             console.error('Erreur lors de la génération de l\'image:', response.statusText);
         }

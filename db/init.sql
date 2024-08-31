@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS posts (
     id INT UNSIGNED NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
     user_id INT UNSIGNED NOT NULL,
     post TEXT,
-    photo_url VARCHAR(255),
+    photoData MEDIUMBLOB, -- Remplacez photo_url VARCHAR(255) par photoData LONGBLOB pour stocker des images binaires
     `like` BOOLEAN DEFAULT FALSE,
     comment TEXT,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

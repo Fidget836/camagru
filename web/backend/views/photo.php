@@ -1,4 +1,8 @@
 <?php
+
+include '../db/db.php';
+include '../models/photoModel.php';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['photo']) && isset($_POST['sticker'])) {
         $photoData = $_POST['photo'];
@@ -48,13 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Superposer le sticker sur l'image de fond
         imagecopy($photo, $sticker, $destx, $desty, 0, 0, $stickerWidth, $stickerHeight);
 
-        // Envoyer l'image finale comme réponse
-        header('Content-Type: image/jpeg');
+        ob_start();
         imagejpeg($photo, null, 100);
+        $imageData = ob_get_contents();
+        ob_end_clean();
 
         // Libérer la mémoire
         imagedestroy($photo);
         imagedestroy($sticker);
+
+        $db = new Db();
+        $photoModel = new photoModel($db, $imageData);
+        $photoModel->stockPhoto();
+        $db->closeDb();
     } else {
         error_log('Paramètres manquants : photo ou sticker.');
         http_response_code(400);
