@@ -28,7 +28,30 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
     }
 
-    
+
+    // Recover pictures
+    const formDataList = new FormData();
+    formDataList.append('id', sessionData.user_id);
+
+    const listPreviousPicturesResponse = await fetch("https://localhost:8443/backend/views/getPhoto.php", {
+        method: 'POST',
+        body: formDataList
+    });
+
+
+
+    if (listPreviousPicturesResponse.ok) {
+        listPreviousPictures = await listPreviousPicturesResponse.json();
+
+        listPreviousPictures.result.forEach(element => {
+            const img = new Image();
+            img.src = 'data:image/jpeg;base64,' + element;
+            pictureDiv.appendChild(img);
+        });
+    } else {
+        console.log("Error to recover the previous pictures !");
+    }
+
     captureButton.addEventListener('click', async () => {
         let sticker = null;
         for (let i = 0; i < radios.length; i++) {
@@ -50,6 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         formData.append('sticker', sticker);
         formData.append('canvaWidth', canvas.width);
         formData.append('canvaHeight', canvas.height);
+        formData.append('id', sessionData.user_id);
     
         const response = await fetch("https://localhost:8443/backend/views/photo.php", {
             method: 'POST',

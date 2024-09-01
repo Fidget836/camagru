@@ -10,10 +10,10 @@ class photoModel {
         $this->imageData = $imageData;
     }
 
-    public function stockPhoto() {
+    public function stockPhoto($id) {
         try {
             // Préparer la requête SQL pour insérer l'image sous forme de BLOB
-            $userId = 1; // Remplacez par l'ID de l'utilisateur connecté
+            $userId = $id; // Remplacez par l'ID de l'utilisateur connecté
 
             $this->stmt = $this->db->conn->prepare("INSERT INTO posts (user_id, photoData) VALUES (?, ?)");
             $this->stmt->bindParam(1, $userId, PDO::PARAM_INT);
@@ -31,6 +31,20 @@ class photoModel {
         } catch (PDOException $e) {
             echo json_encode(['status' => 'error', 'message' => 'Connection failed: ' . $e->getMessage()]);
         }
+    }
+
+    public function recoverPictures($id) {
+        $this->stmt = $this->db->conn->prepare("SELECT photoData FROM posts WHERE user_id = ?");
+        $this->stmt->bindParam(1, $id, PDO::PARAM_INT);
+        $this->stmt->execute();
+        $pictures = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $picturesBase64 = [];
+        foreach($pictures as $picture) {
+            $picturesBase64[] = base64_encode($picture['photoData']);
+        }
+
+        echo json_encode(['status' => 'success', 'result' => $picturesBase64]);
     }
 }
 

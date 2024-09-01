@@ -4,11 +4,12 @@ include '../db/db.php';
 include '../models/photoModel.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['photo']) && isset($_POST['sticker']) && isset($_POST['canvaWidth']) && isset($_POST['canvaHeight'])) {
+    if (isset($_POST['photo']) && isset($_POST['sticker']) && isset($_POST['canvaWidth']) && isset($_POST['canvaHeight']) && isset($_POST['id'])) {
         $photoData = $_POST['photo'];
         $stickerFilename = $_POST['sticker'];
         $canvaWidth = $_POST['canvaWidth'];
         $canvaHeight = $_POST['canvaHeight'];
+        $id = $_POST['id'];
 
         // Décoder l'image de la webcam (base64)
         $photoData = str_replace('data:image/png;base64,', '', $photoData);
@@ -65,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $db = new Db();
         $photoModel = new photoModel($db, $imageData);
-        $photoModel->stockPhoto();
+        $photoModel->stockPhoto($id);
         $db->closeDb();
     } else {
         error_log('Paramètres manquants : photo ou sticker.');
@@ -73,4 +74,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo 'Paramètres manquants !';
     }
 }
+
 ?>

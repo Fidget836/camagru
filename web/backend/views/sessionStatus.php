@@ -4,7 +4,8 @@
 
     $response = [
         'loggedIn' => isset($_SESSION['user_id']),
-        'username' => isset($_SESSION['username']) ? $_SESSION['username'] : ''
+        'username' => isset($_SESSION['username']) ? $_SESSION['username'] : '',
+        'user_id' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null
     ];
 
     echo json_encode($response);
