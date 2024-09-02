@@ -24,6 +24,13 @@
     border-right: 2px black solid;
 }
 
+#picturesDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .webcam {
     width: 60%;
     height: 100vh;
@@ -62,8 +69,9 @@ padding: 20px 0px;
 }
 
 button {
-    width: 100px;
+    min-width: 100px;
     height: 40px;
+    padding: 0px 10px;
     background: none;
     margin: 20px 0px;
     border: 2px black solid;

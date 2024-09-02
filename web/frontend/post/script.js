@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const context = canvas.getContext('2d');
     const captureButton = document.getElementById('btnCapture');
     const radios = document.querySelectorAll('input[name="stickerChoice"]');   
-    const pictureDiv = document.getElementById('pictures'); 
+    const pictureDiv = document.getElementById('picturesDiv'); 
     const webcamDiv = document.getElementById('webcam'); 
     const validPictureDiv = document.querySelector('.validPicture'); 
     const pictureValidDiv = document.querySelector('.pictureValid');
@@ -30,76 +30,69 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
     }
 
-    // Récupérer les images une seule fois
-    await loadPreviousPictures(sessionData.user_id);
-
     // Fonction pour charger les images précédentes
-    async function loadPreviousPictures(userId) {
-        const formDataList = new FormData();
-        formDataList.append('id', userId);
+    const formDataList = new FormData();
+    formDataList.append('id', sessionData.user_id);
+    formDataList.append('nbPicture', 5);
 
-        const listPreviousPicturesResponse = await fetch("https://localhost:8443/backend/views/getPhoto.php", {
-            method: 'POST',
-            body: formDataList
-        });
+    const listPreviousPicturesResponse = await fetch("https://localhost:8443/backend/views/getPhoto.php", {
+        method: 'POST',
+        body: formDataList
+    });
 
-        // Afficher les images précédentes
-        if (listPreviousPicturesResponse.ok) {
-            listPreviousPictures = await listPreviousPicturesResponse.json();
+    // Afficher les images précédentes
+    if (listPreviousPicturesResponse.ok) {
+        listPreviousPictures = await listPreviousPicturesResponse.json();
+        
+        // Effacer les anciennes images si nécessaire
+        pictureDiv.innerHTML = ''; 
 
-            // Effacer les anciennes images si nécessaire
-            pictureDiv.innerHTML = ''; 
+        for (let i = 0; i < 5; i++) {
+            if (i < 0) break;
+            const element = listPreviousPictures.result[i];
+            
+            const img = new Image();
+            img.src = 'data:image/jpeg;base64,' + element;
 
-            for (let i = listPreviousPictures.result.length - 1; i >= listPreviousPictures.result.length - 5; i--) {
-                if (i < 0) break; // Assurez-vous que l'index est valide
-                const element = listPreviousPictures.result[i];
-                const img = new Image();
-                img.src = 'data:image/jpeg;base64,' + element;
+            img.onload = () => {
+                const canvasThumbnail = document.createElement('canvas');
+                const contextThumbnail = canvasThumbnail.getContext('2d');
 
-                img.onload = () => {
-                    const canvasThumbnail = document.createElement('canvas');
-                    const contextThumbnail = canvasThumbnail.getContext('2d');
-
-                    const thumbnailWidth = 177;
-                    const thumbnailHeight = 100;
-                    let width = img.width;
-                    let height = img.height;
-                    if (width > height) {
-                        height = Math.round(height * (thumbnailWidth / width));
-                        width = thumbnailWidth;
-                    } else {
-                        width = Math.round(width * (thumbnailHeight / height));
-                        height = thumbnailHeight;
-                    }
-                    canvasThumbnail.width = width;
-                    canvasThumbnail.height = height;
-
-                    contextThumbnail.drawImage(img, 0, 0, width, height);
-
-                    const thumbnailDataUrl = canvasThumbnail.toDataURL('image/jpeg');
-                    const thumbnailImg = new Image();
-                    thumbnailImg.src = thumbnailDataUrl;
-
-                    pictureDiv.appendChild(thumbnailImg);
+                const thumbnailWidth = 177;
+                const thumbnailHeight = 100;
+                let width = img.width;
+                let height = img.height;
+                if (width > height) {
+                    height = Math.round(height * (thumbnailWidth / width));
+                    width = thumbnailWidth;
+                } else {
+                    width = Math.round(width * (thumbnailHeight / height));
+                    height = thumbnailHeight;
                 }
-            };
-        } else {
-            console.log("Error to recover the previous pictures !");
-        }
+                canvasThumbnail.width = width;
+                canvasThumbnail.height = height;
+
+                contextThumbnail.drawImage(img, 0, 0, width, height);
+
+                const thumbnailDataUrl = canvasThumbnail.toDataURL('image/jpeg');
+                const thumbnailImg = new Image();
+                thumbnailImg.src = thumbnailDataUrl;
+                
+                pictureDiv.appendChild(thumbnailImg);
+            }
+        };
+    } else {
+        console.log("Error to recover the previous pictures !");
     }
+
+
+
+
 
 // Fonction pour afficher la div validPicture
 function showValidPicture() {
     const validPictureDiv = document.querySelector('.validPicture');
     validPictureDiv.classList.add('visible');
-    document.getElementById('webcam').style.display = 'none';
-}
-
-// Fonction pour masquer la div validPicture et revenir à la webcam
-function hideValidPicture() {
-    const validPictureDiv = document.querySelector('.validPicture');
-    validPictureDiv.classList.remove('visible');
-    document.getElementById('webcam').style.display = 'flex'; // Réafficher la webcam
 }
 
 // Événement du bouton "Take the picture"
@@ -149,15 +142,11 @@ captureButton.addEventListener('click', async () => {
     }
 });
 
-// Gérer l'événement du bouton "Take another picture"
-btnAnotherPicture.addEventListener('click', () => {
-    hideValidPicture();
-    window.location.reload();
-});
+    btnAnotherPicture.addEventListener('click', () => {
+        window.location.reload();
+    });
 
-    // Gérer l'événement du bouton "Go Home"
     btnHome.addEventListener('click', () => {
         window.location.href = '/';
     });
-
 });
