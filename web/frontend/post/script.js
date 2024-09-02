@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const pictureValidDiv = document.querySelector('.pictureValid');
     const btnHome = document.getElementById('btnHome');
     const btnAnotherPicture = document.getElementById('btnAnotherPicture');
+    const uploadImageInput = document.getElementById('uploadImage');
+    const uploadCanvas = document.getElementById('uploadCanvas');
+    const uploadContext = uploadCanvas.getContext('2d');
+    const btnUploadCapture = document.getElementById('btnUploadCapture');
 
     // Doit être en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
@@ -85,62 +89,119 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("Error to recover the previous pictures !");
     }
 
-
-
-
-
-// Fonction pour afficher la div validPicture
-function showValidPicture() {
-    const validPictureDiv = document.querySelector('.validPicture');
-    validPictureDiv.classList.add('visible');
-}
-
-// Événement du bouton "Take the picture"
-captureButton.addEventListener('click', async () => {
-    let sticker = null;
-    for (let i = 0; i < radios.length; i++) {
-        if (radios[i].checked) {
-            sticker = radios[i].value;
-        }
+    // Fonction pour afficher la div validPicture
+    function showValidPicture() {
+        const validPictureDiv = document.querySelector('.validPicture');
+        validPictureDiv.classList.add('visible');
     }
 
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    // Événement du bouton "Take the picture"
+    captureButton.addEventListener('click', async () => {
+        let sticker = null;
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                sticker = radios[i].value;
+            }
+        }
 
-    // Conversion de l'image en data URL (base64)
-    const dataUrl = canvas.toDataURL('image/png');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const formData = new FormData();
-    formData.append('photo', dataUrl);
-    formData.append('sticker', sticker);
-    formData.append('canvaWidth', canvas.width);
-    formData.append('canvaHeight', canvas.height);
-    formData.append('id', sessionData.user_id);
+        // Conversion de l'image en data URL (base64)
+        const dataUrl = canvas.toDataURL('image/png');
 
-    const response = await fetch("https://localhost:8443/backend/views/photo.php", {
-        method: 'POST',
-        body: formData
+        const formData = new FormData();
+        formData.append('photo', dataUrl);
+        formData.append('sticker', sticker);
+        formData.append('canvaWidth', canvas.width);
+        formData.append('canvaHeight', canvas.height);
+        formData.append('id', sessionData.user_id);
+
+        const response = await fetch("https://localhost:8443/backend/views/photo.php", {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const imageUrl = URL.createObjectURL(blob);
+
+            // Créer une nouvelle image pour afficher le résultat
+            const resultImage = new Image();
+            resultImage.src = imageUrl;
+
+            // Ajouter l'image au conteneur validPicture
+            pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
+            pictureValidDiv.appendChild(resultImage);
+
+            // Afficher la div validPicture et cacher webcamDiv
+            showValidPicture();
+        } else {
+            console.error('Erreur lors de la génération de l\'image:', response.statusText);
+        }
     });
 
-    if (response.ok) {
-        const blob = await response.blob();
-        const imageUrl = URL.createObjectURL(blob);
+    // Événement de téléchargement d'image
+    uploadImageInput.addEventListener('change', () => {
+        const file = uploadImageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    uploadCanvas.width = img.width;
+                    uploadCanvas.height = img.height;
+                    uploadContext.drawImage(img, 0, 0);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
-        // Créer une nouvelle image pour afficher le résultat
-        const resultImage = new Image();
-        resultImage.src = imageUrl;
+    // Événement du bouton "Add sticker to uploaded image!"
+    btnUploadCapture.addEventListener('click', async () => {
+        let sticker = null;
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                sticker = radios[i].value;
+            }
+        }
 
-        // Ajouter l'image au conteneur validPicture
-        pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
-        pictureValidDiv.appendChild(resultImage);
+        // Conversion de l'image en data URL (base64)
+        const dataUrl = uploadCanvas.toDataURL('image/png');
 
-        // Afficher la div validPicture et cacher webcamDiv
-        showValidPicture();
-    } else {
-        console.error('Erreur lors de la génération de l\'image:', response.statusText);
-    }
-});
+        const formData = new FormData();
+        formData.append('photo', dataUrl);
+        formData.append('sticker', sticker);
+        formData.append('canvaWidth', uploadCanvas.width);
+        formData.append('canvaHeight', uploadCanvas.height);
+        formData.append('id', sessionData.user_id);
+
+        const response = await fetch("https://localhost:8443/backend/views/photo.php", {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const imageUrl = URL.createObjectURL(blob);
+
+            // Créer une nouvelle image pour afficher le résultat
+            const resultImage = new Image();
+            resultImage.src = imageUrl;
+
+            // Ajouter l'image au conteneur validPicture
+            pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
+            pictureValidDiv.appendChild(resultImage);
+
+            // Afficher la div validPicture et cacher webcamDiv
+            showValidPicture();
+        } else {
+            console.error('Erreur lors de la génération de l\'image:', response.statusText);
+        }
+    });
 
     btnAnotherPicture.addEventListener('click', () => {
         window.location.reload();

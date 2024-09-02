@@ -49,8 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stickerHeight = imagesy($sticker);
 
         // Définir les coordonnées où le sticker sera placé sur l'image de fond
-        $destx = rand(0, $canvaWidth * 0.9);
-        $desty = rand(0, $canvaHeight * 0.9);
+        $destx = (int)rand(0, $canvaWidth * 0.9);
+        $desty = (int)rand(0, $canvaHeight * 0.9);
 
         // Superposer le sticker sur l'image de fond
         imagecopy($photo, $sticker, $destx, $desty, 0, 0, $stickerWidth, $stickerHeight);
