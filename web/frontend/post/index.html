@@ -8,19 +8,21 @@
 </head>
 <body>
     <div class="postPage">
-        <div class="header">
-            <h2>Camagru</h2>
-        </div>
         <div class="main">
             <div class="pictures" id="pictures">
                 <h3>Previous pictures</h3>
             </div>
         
             <div class="webcam" id="webcam">
-                <h3>Webcam</h3>
+                <h2> <a href="/">Camagru</a> </h2>
+                <h3 id="h3Webcam">Webcam</h3>
                 <video autoplay="true" id="videoElement"></video>
                 <canvas id="canvas"></canvas>
                 <button id="btnCapture">Take the picture !</button>
+                <!-- <div class="upload">
+                    <input type="file" id="fileInput" accept="image/*">
+                    <button id="btnUpload">Upload Picture</button>
+                </div> -->
             </div>
             
         
@@ -56,6 +58,13 @@
                 </form>
             </div>
 
+        </div>
+
+        <div class="validPicture">
+                <h3>Picture</h3>
+                <div class="pictureValid"></div>
+                <button id="btnHome">Go Home</button>
+                <button id="btnAnotherPicture">Take another picture</button>
         </div>
     </div>
     <script src="./frontend/post/script.js"></script>
