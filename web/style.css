@@ -65,6 +65,7 @@
 /******** Main ********/
 .main {
     width: 60%;
+    min-height: 93vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -72,6 +73,63 @@
     background: pink;
 }
 
+.feedMainDiv {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 img {
     padding: 15px 0px;
+}
+
+.pictureFeed {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0px;
+    background: red;
+}
+
+.handleDiv {
+    width: 90%;
+    display: flex;
+    background: yellow;
+}
+
+.commentDiv {
+    width: 80%;
+    background: green;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.likeDiv {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.likeImg {
+    cursor: pointer;
+}
+
+.btnMorePicture {
+    min-width: 100px;
+    height: 40px;
+    padding: 0px 10px;
+    background: none;
+    margin: 20px 0px;
+    border: 2px black solid;
+    border-radius: 5px;
+    color: #0a8a72;
+    font-size: 1rem;
+    cursor: pointer;
 }

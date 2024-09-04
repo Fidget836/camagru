@@ -10,7 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $db = new Db();
     $photoModel = new photoModel($db, null);
-    // echo json_encode(['status' => 'error', 'message' => 'TEST']);
     $photoModel->recoverFeed($offset, $nbPicture);
     $db->closeDb();
     }
