@@ -44,9 +44,9 @@
     margin: 10px;
 }
 
-#video {
+#videoElement {
     width: 640px;
-    height: 360px;
+    height: 480px;
     background: grey;
 }
 

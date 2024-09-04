@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         pictureDiv.innerHTML = ''; 
 
         for (let i = 0; i < 5; i++) {
-            if (i < 0) break;
+            if (listPreviousPictures.result[i] === undefined) break;
             const element = listPreviousPictures.result[i];
             
             const img = new Image();
@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Événement de téléchargement d'image
     uploadImageInput.addEventListener('change', () => {
         const file = uploadImageInput.files[0];
         if (file) {
@@ -150,9 +149,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             reader.onload = function(event) {
                 const img = new Image();
                 img.onload = function() {
-                    uploadCanvas.width = img.width;
-                    uploadCanvas.height = img.height;
-                    uploadContext.drawImage(img, 0, 0);
+                    // Calculer les nouvelles dimensions tout en conservant le ratio
+                    let maxWidth = 640;
+                    let maxHeight = 480;
+                    let ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
+    
+                    // Nouvelles dimensions de l'image
+                    let newWidth = img.width * ratio;
+                    let newHeight = img.height * ratio;
+    
+                    // Redimensionner le canvas et dessiner l'image redimensionnée
+                    uploadCanvas.width = newWidth;
+                    uploadCanvas.height = newHeight;
+                    uploadContext.drawImage(img, 0, 0, newWidth, newHeight);
                 };
                 img.src = event.target.result;
             };

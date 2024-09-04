@@ -64,7 +64,14 @@
 
 /******** Main ********/
 .main {
-    width: 40vw;
-    min-height: 93vh;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background: pink;
+}
+
+img {
+    padding: 15px 0px;
 }
