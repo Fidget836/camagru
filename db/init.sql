@@ -12,7 +12,16 @@ CREATE TABLE IF NOT EXISTS posts (
     post TEXT,
     photoData MEDIUMBLOB, -- Remplacez photo_url VARCHAR(255) par photoData LONGBLOB pour stocker des images binaires
     `like` BOOLEAN DEFAULT FALSE,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+    id INT UNSIGNED NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
+    post_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
     comment TEXT,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

@@ -49,11 +49,12 @@ class photoModel {
     }
 
     public function recoverFeed($offset, $nbPicture) {
-        $this->stmt = $this->db->conn->prepare("SELECT photoData FROM posts ORDER BY create_at DESC LIMIT ? OFFSET ?");
+        $this->stmt = $this->db->conn->prepare("SELECT id, photoData FROM posts ORDER BY create_at DESC LIMIT ? OFFSET ?");
         $this->stmt->bindParam(1, $nbPicture, PDO::PARAM_INT);
         $this->stmt->bindParam(2, $offset, PDO::PARAM_INT);
         $this->stmt->execute();
         $pictures = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+
 
         if (!$pictures) {
             echo json_encode(['status' => 'error', 'message' => 'Aucune photo trouvée']);
@@ -62,7 +63,10 @@ class photoModel {
 
         $picturesBase64 = [];
         foreach ($pictures as $picture) {
-            $picturesBase64[] = base64_encode($picture['photoData']);
+            $picturesBase64[] = [
+                'id' => $picture['id'], // Inclure l'ID
+                'photoData' => base64_encode($picture['photoData']) // Encoder la photo en base64
+            ];
         }
 
         echo json_encode(['status' => 'success', 'result' => $picturesBase64]);
