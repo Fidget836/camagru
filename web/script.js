@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         btnLogout.style.display = 'none';
         btnPost.style.display = 'none';
     }
-
+    
     const recoverComment = async (id, nbPicture) => {
         const formDataGetComment = new FormData;
         formDataGetComment.append('id', id);
@@ -166,6 +166,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             for(let i = 0; i < commentsListNew.length; i++) {
                                                 let commentRead = document.createElement('p');
                                                 commentRead.textContent = commentsListNew[i].comment;
+                                                commentRead.classList.add("commentP");  
                                                 commentListDiv.appendChild(commentRead);
                                             }
                                             
@@ -196,6 +197,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         for(let i = 0; i < commentsList.length; i++) {
                             let commentRead = document.createElement('p');
                             commentRead.textContent = commentsList[i].comment;
+                            commentRead.classList.add("commentP");
                             commentListDiv.appendChild(commentRead);
                         }
 
@@ -216,6 +218,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 for(let i = 0; i < commentsListNew.length; i++) {
                                     let commentRead = document.createElement('p');
                                     commentRead.textContent = commentsListNew[i].comment;
+                                    commentRead.classList.add("commentP");
                                     commentListDiv.appendChild(commentRead);
                                 }
                             }
@@ -229,8 +232,83 @@ document.addEventListener('DOMContentLoaded', async () => {
                         let likeDiv = document.createElement('div');
                         likeDiv.className = "likeDiv";
                         let likeImg = document.createElement("img");
-                        likeImg.className = "likeImg";
+                        likeImg.classList.add("likeImg");
                         likeImg.src = "frontend/pictures/like.png";
+                        if (sessionData.loggedIn) {
+                            const formDataGetLike = new FormData;
+                            formDataGetLike.append('user_id', sessionData.user_id);
+
+                            const response = await fetch("https://localhost:8443/backend/views/getLike.php", {
+                                body: formDataGetLike,
+                                method: 'POST'
+                            });
+
+                            if (response.ok) {
+                                try {
+                                    const result = await response.json();
+                                    if (result.result[0] === 1) {
+                                        likeImg.classList.add("active");
+                                    }
+                                } catch (error) {
+                                    console.log(error);
+                                }
+                            } else {
+                                console.log("Error in getLike");
+                            }
+                        }
+
+
+
+                        likeImg.addEventListener('click', async () => {
+                            if (sessionData.loggedIn) {
+                                if (!likeImg.classList.contains("active")) {
+                                    const formDataLike = new FormData;
+                                    formDataLike.append('user_id', sessionData.user_id);
+        
+                                    const response = await fetch("https://localhost:8443/backend/views/putLike.php", {
+                                        body: formDataLike,
+                                        method: 'POST'
+                                    });
+        
+                                    if (response.ok) {
+                                        try {
+                                            const message = await response.json();
+                                            console.log(message);
+                                            likeImg.classList.add("active");
+                                        } catch (error) {
+                                            console.log(error);
+                                        }
+                                    } else {
+                                        console.log("Error to put the like");
+                                    }
+                                } else {
+                                    const formDataDeleteLike = new FormData;
+                                    formDataDeleteLike.append('user_id', sessionData.user_id);
+
+                                    const response = await fetch("https://localhost:8443/backend/views/deleteLike.php", {
+                                        body: formDataDeleteLike,
+                                        method: 'POST'
+                                    });
+
+                                    if (response.ok) {
+                                        try {
+                                            const result = await response.json();
+                                            likeImg.classList.remove("active");
+                                            console.log(result);
+                                        } catch (error) {
+                                            console.log(error);
+                                        }
+                                    } else {
+                                        console.log("Error in delete like");
+                                    }
+                                }
+                            }
+                        });
+
+
+
+
+
                         likeDiv.appendChild(likeImg);
                         handleDiv.appendChild(likeDiv);
 

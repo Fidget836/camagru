@@ -18,8 +18,8 @@
 /******** Header ********/
 
 .header {
-    background: #91ffff;
-    color: #08a4a7;
+    background: #08a4a7;
+    color: black;
     width: 100vw;
     height: 7vh;
     display: flex;
@@ -57,7 +57,7 @@
     background: none;
     border: 2px solid black;
     border-radius: 5px;
-    color: #08a4a7;
+    color: black;
     cursor: pointer;
 }
 
@@ -70,7 +70,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: pink;
+    background: #91ffff;
 }
 
 .feedMainDiv {
@@ -93,25 +93,50 @@ img {
     align-items: center;
     justify-content: center;
     margin: 10px 0px;
-    background: red;
+    /* background: #0a8a72; */
+    border: 2px black solid;
+    border-radius: 15px;
 }
 
 .handleDiv {
-    width: 90%;
+    width: 100%;
     display: flex;
-    background: yellow;
+    background: #4dfed1;
+    padding: 10px 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .commentDiv {
-    width: 80%;
-    background: green;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.commentInput {
+    margin: 10px 0px;
+    padding: 2px;
+    border-radius: 5px;
+    width: 75%;
+}
+
+.commentButton, .buttonListDiv {
+    padding: 2px 5px;
+    margin: 3px 0px;
+    cursor: pointer;
+    background: white;
+    border-radius: 5px;
+}
+
+.commentP {
+    padding: 3px 0px;
+}
+
 .likeDiv {
     width: 20%;
+    height: 75px;
+    top: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,6 +144,12 @@ img {
 
 .likeImg {
     cursor: pointer;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.active {
+    background: rgb(0, 140, 255);
 }
 
 .btnMorePicture {
