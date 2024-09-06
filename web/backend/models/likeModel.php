@@ -8,8 +8,9 @@ class likeModel {
         $this->db = $db;
     }
 
-    public function putLike($user_id) {
-        $this->stmt = $this->db->conn->prepare("INSERT INTO likes (user_id) VALUES (:user_id)");
+    public function putLike($post_id, $user_id) {
+        $this->stmt = $this->db->conn->prepare("INSERT INTO likes (post_id, user_id) VALUES (:post_id, :user_id)");
+        $this->stmt->bindParam(':post_id', $post_id, PDO::PARAM_INT);
         $this->stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         
         if ($this->stmt->execute()) {
@@ -21,9 +22,10 @@ class likeModel {
         }
     }
 
-    public function getLike($user_id) {
-        $this->stmt = $this->db->conn->prepare("SELECT COUNT(*) FROM likes WHERE user_id = ?");
-        $this->stmt->bindParam(1, $user_id, PDO::PARAM_INT);
+    public function getLike($post_id, $user_id) {
+        $this->stmt = $this->db->conn->prepare("SELECT COUNT(*) FROM likes WHERE post_id = ? AND user_id = ?");
+        $this->stmt->bindParam(1, $post_id, PDO::PARAM_INT);
+        $this->stmt->bindParam(2, $user_id, PDO::PARAM_INT);
         
         if ($this->stmt->execute()) {
             $result = $this->stmt->fetch();
@@ -35,9 +37,10 @@ class likeModel {
         }
     }
 
-    public function deleteLike($user_id) {
-        $this->stmt = $this->db->conn->prepare("DELETE FROM likes WHERE user_id = ?");
-        $this->stmt->bindParam(1, $user_id, PDO::PARAM_INT);
+    public function deleteLike($post_id, $user_id) {
+        $this->stmt = $this->db->conn->prepare("DELETE FROM likes WHERE post_id = ? AND user_id = ?");
+        $this->stmt->bindParam(1, $post_id, PDO::PARAM_INT);
+        $this->stmt->bindParam(2, $user_id, PDO::PARAM_INT);
         
         if ($this->stmt->execute()) {
             http_response_code(200);

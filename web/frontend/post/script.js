@@ -55,35 +55,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (listPreviousPictures.result[i] === undefined) break;
             const element = listPreviousPictures.result[i];
             
-            const img = new Image();
-            img.src = 'data:image/jpeg;base64,' + element;
+            await new Promise((resolve) => {
+                const img = new Image();
+                img.src = 'data:image/jpeg;base64,' + element;
 
-            img.onload = () => {
-                const canvasThumbnail = document.createElement('canvas');
-                const contextThumbnail = canvasThumbnail.getContext('2d');
+                img.onload = () => {
+                    const canvasThumbnail = document.createElement('canvas');
+                    const contextThumbnail = canvasThumbnail.getContext('2d');
 
-                const thumbnailWidth = 177;
-                const thumbnailHeight = 100;
-                let width = img.width;
-                let height = img.height;
-                if (width > height) {
-                    height = Math.round(height * (thumbnailWidth / width));
-                    width = thumbnailWidth;
-                } else {
-                    width = Math.round(width * (thumbnailHeight / height));
-                    height = thumbnailHeight;
+                    const thumbnailWidth = 177;
+                    const thumbnailHeight = 100;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > height) {
+                        height = Math.round(height * (thumbnailWidth / width));
+                        width = thumbnailWidth;
+                    } else {
+                        width = Math.round(width * (thumbnailHeight / height));
+                        height = thumbnailHeight;
+                    }
+                    canvasThumbnail.width = width;
+                    canvasThumbnail.height = height;
+
+                    contextThumbnail.drawImage(img, 0, 0, width, height);
+
+                    const thumbnailDataUrl = canvasThumbnail.toDataURL('image/jpeg');
+                    const thumbnailImg = new Image();
+                    thumbnailImg.src = thumbnailDataUrl;
+                    
+                    pictureDiv.appendChild(thumbnailImg);
+                    resolve();
                 }
-                canvasThumbnail.width = width;
-                canvasThumbnail.height = height;
-
-                contextThumbnail.drawImage(img, 0, 0, width, height);
-
-                const thumbnailDataUrl = canvasThumbnail.toDataURL('image/jpeg');
-                const thumbnailImg = new Image();
-                thumbnailImg.src = thumbnailDataUrl;
-                
-                pictureDiv.appendChild(thumbnailImg);
-            }
+            });
         };
     } else {
         console.log("Error to recover the previous pictures !");
