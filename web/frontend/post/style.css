@@ -10,13 +10,13 @@
 
 .main {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
 }
 
 .pictures {
     width: 20%;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,7 +33,7 @@
 
 .webcam {
     width: 60%;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,7 +56,7 @@
 
 .stickers {
     width: 20%;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -115,6 +115,7 @@ button {
     }
 
     .stickers {
+        width: 50%;
         border: none;
     }
 
@@ -139,6 +140,7 @@ button {
     }
 
     .stickers {
+        width: 50%;
         border: none;
     }
 
@@ -148,6 +150,6 @@ button {
     }
 
     .validPicture {
-        height: 275vh;
+        height: 340vh;
     }
 }

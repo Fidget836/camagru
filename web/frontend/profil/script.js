@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnRegisterToLogin = document.getElementById('btnRegisterToLogin');
     const login = document.getElementById('login');
     const register = document.getElementById('register');
+    const loginRight = document.getElementById('loginRight');
+    const registerLeft = document.getElementById('registerLeft');
     const errorRegister = document.getElementById('errorRegister');
     const errorLogin = document.getElementById('errorLogin');
 
@@ -17,15 +19,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     
-    btnLoginToRegister.addEventListener('click', () => {
-        login.classList.add('invisible');
+    if (window.innerWidth > 1300) {
+        btnLoginToRegister.addEventListener('click', () => {
+            login.classList.add('invisible');
+            register.classList.remove('invisible');
+        });
+        
+        btnRegisterToLogin.addEventListener('click', () => {
+            register.classList.add('invisible');
+            login.classList.remove('invisible');
+        });
+    } else {
         register.classList.remove('invisible');
-    });
-    
-    btnRegisterToLogin.addEventListener('click', () => {
-        register.classList.add('invisible');
-        login.classList.remove('invisible');
-    });
+        loginRight.classList.add('invisible');
+        registerLeft.classList.add('invisible');
+    }
     
     
     /***** Form Register*****/
