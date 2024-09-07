@@ -87,7 +87,7 @@ img {
 }
 
 .pictureFeed {
-    width: 80%;
+    width: 95%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,7 +130,11 @@ img {
 }
 
 .commentP {
-    padding: 3px 0px;
+    padding: 7px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .likeDiv {
@@ -163,4 +167,10 @@ img {
     color: #0a8a72;
     font-size: 1rem;
     cursor: pointer;
+}
+
+@media (max-width: 950px) {
+    .commentP {
+        font-size: 0.7rem;
+    }
 }

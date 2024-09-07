@@ -83,7 +83,7 @@ button {
 
 .validPicture {
     width: 100vw;
-    height: 100vh;
+    height: 115vh;
     background: #91ffff;
     color: #08a4a7;
     position: absolute;
@@ -101,4 +101,53 @@ button {
 .validPicture.visible {
     opacity: 1;
     pointer-events: auto;
+}
+
+/* Si la largeur de la fenêtre est entre 950px et 1300px */
+@media (min-width: 950px) and (max-width: 1300px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pictures {
+        border: none;
+    }
+
+    .stickers {
+        border: none;
+    }
+
+    #videoElement {
+        width: 480px;
+        height: 360px;
+    }
+
+    .validPicture {
+        height: 275vh;
+    }
+}
+
+@media (max-width: 950px) {
+    .main {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pictures {
+        border: none;
+    }
+
+    .stickers {
+        border: none;
+    }
+
+    #videoElement {
+        width: 240px;
+        height: 180px;
+    }
+
+    .validPicture {
+        height: 275vh;
+    }
 }

@@ -5,14 +5,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     const feedMainDiv = document.getElementById('feedMainDiv');
     const btnMorePicture = document.getElementById("btnMorePicture");
     var feedCount = 0;
-
+    
     btnProfil.addEventListener('click', () => {
         window.location.href = "/profil";
     });
-
+    
     btnPost.addEventListener('click', () => {
         window.location.href = "/post";
     });
+    
+
+    // Size of picture
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    var sizePictureWidth;
+    var sizePictureHeight;
+    if (windowWidth < 950) {
+        sizePictureWidth = 240;
+        sizePictureHeight = 180;
+    } else if (windowWidth < 1300) {
+        sizePictureWidth = 480;
+        sizePictureHeight = 360;
+    } else {
+        sizePictureWidth = 640;
+        sizePictureHeight = 480;
+    }
+
+
 
     // Check login status
     const response = await fetch('https://localhost:8443/backend/views/sessionStatus.php');
@@ -76,8 +95,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const canvasThumbnail = document.createElement('canvas');
                             const contextThumbnail = canvasThumbnail.getContext('2d');
 
-                            const thumbnailWidth = 640;
-                            const thumbnailHeight = 480;
+                            const thumbnailWidth = sizePictureWidth;
+                            const thumbnailHeight = sizePictureHeight;
                             let width = img.width;
                             let height = img.height;
                             if (width > height) {

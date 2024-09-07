@@ -34,6 +34,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
     }
 
+
+        // Size of picture
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        var sizePictureWidth;
+        var sizePictureHeight;
+        if (windowWidth < 950) {
+            sizePictureWidth = 240;
+            sizePictureHeight = 180;
+        } else if (windowWidth < 1300) {
+            sizePictureWidth = 480;
+            sizePictureHeight = 360;
+        } else {
+            sizePictureWidth = 640;
+            sizePictureHeight = 480;
+        }
+
+
+
     // Fonction pour charger les images précédentes
     const formDataList = new FormData();
     formDataList.append('id', sessionData.user_id);
@@ -107,8 +126,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        canvas.width = sizePictureWidth;
+        canvas.height = sizePictureHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         // Conversion de l'image en data URL (base64)
@@ -153,8 +172,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const img = new Image();
                 img.onload = function() {
                     // Calculer les nouvelles dimensions tout en conservant le ratio
-                    let maxWidth = 640;
-                    let maxHeight = 480;
+                    let maxWidth = sizePictureWidth;
+                    let maxHeight = sizePictureWidth;
                     let ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
     
                     // Nouvelles dimensions de l'image
