@@ -13,7 +13,7 @@ services:
       - .env
     depends_on:
       - db
-      - mailhog
+      - mailcatcher
   db:
     build: ./db
     env_file:
@@ -22,12 +22,12 @@ services:
       - db_data:/var/lib/mysql
     restart: always
 
-  mailhog:
-    image: corpusops/mailhog
-    container_name: mailhog
+  mailcatcher:
+    image: dockage/mailcatcher
+    container_name: mailcatcher
     ports:
-      - "8025:8025"  # Interface web MailHog
-      - "1025:1025"  # Port SMTP utilisé par MailHog
+      - "1080:1080"  # Interface web MailCatcher
+      - "1025:1025"  # Port SMTP utilisé par MailCatcher
       
 volumes:
   db_data:
