@@ -13,13 +13,21 @@ services:
       - .env
     depends_on:
       - db
+      - mailhog
   db:
     build: ./db
     env_file:
       - .env
     volumes:
       - db_data:/var/lib/mysql
-    # restart: always
+    restart: always
 
+  mailhog:
+    image: corpusops/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"  # Interface web MailHog
+      - "1025:1025"  # Port SMTP utilisé par MailHog
+      
 volumes:
   db_data:

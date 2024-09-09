@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const registerLeft = document.getElementById('registerLeft');
     const errorRegister = document.getElementById('errorRegister');
     const errorLogin = document.getElementById('errorLogin');
+    const btnMail = document.getElementById('btnMail');
 
     const formRegister = document.getElementById('formRegister');
     const formLogin = document.getElementById('formLogin');
@@ -35,6 +36,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         registerLeft.classList.add('invisible');
     }
     
+    btnMail.addEventListener('click', async () => {
+        const response = await fetch("https://localhost:8443/backend/views/sendMail.php", {
+            method: 'GET'
+        });
+
+        if (response.ok) {
+            try {
+                const result = await response.json();
+                console.log(result);
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            console.log("Error in the fetch sendMail");
+        }
+    });
     
     /***** Form Register*****/
     formRegister.addEventListener('submit', async (event) => {

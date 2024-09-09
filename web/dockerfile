@@ -17,6 +17,8 @@ COPY ./ /var/www/html/
 COPY nginx.conf /etc/nginx/nginx.conf                                                                                                                                                                                                                                                                                                                                                                                                                        
 COPY ./certs/selfsigned.crt /etc/nginx/ssl/selfsigned.crt
 COPY ./certs/selfsigned.key /etc/nginx/ssl/selfsigned.key
+COPY php.ini /usr/local/etc/php/conf.d/
+RUN mkdir -p /var/log && touch /var/log/php_errors.log && chmod 777 /var/log/php_errors.log
 
 WORKDIR /var/www/html
 
@@ -24,3 +26,5 @@ EXPOSE 80 443
 
 # Commande pour démarrer PHP-FPM et Nginx ensemble
 CMD ["sh", "-c", "php-fpm & nginx -g 'daemon off;'"]
+
+
