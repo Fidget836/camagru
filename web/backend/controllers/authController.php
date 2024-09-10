@@ -122,12 +122,17 @@ class AuthController {
             exit ;
         }
 
+        if ($this->result['verified'] == 0) {
+            echo json_encode(['status' => 'error', 'message' => "Your account is not verified ! (Check your mail)"]);
+            $this->db->closeDb();
+            exit ;
+        }
+
         // Store user information in session
         $_SESSION['user_id'] = $this->result['id'];
         $_SESSION['username'] = $this->username;
         echo json_encode(['status' => 'success', 'message' => 'Login sucessful !']);
     }
-
 }
 
 ?>
