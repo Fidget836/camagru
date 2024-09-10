@@ -40,6 +40,30 @@ class AuthController {
         $this->verifUser();
     }
 
+    public function changeUsername($username) {
+        if (empty($username)) {
+            echo json_encode(['status' => 'error', 'message' => "The username can't be empty !"]);
+            $this->db->closeDb();
+            exit ;
+        }
+        $this->username = $username;
+        $this->uniciteUser();
+    }
+
+    public function changeEmail($email) {
+        if (empty($email)) {
+            echo json_encode(['status' => 'error', 'message' => "The email can't be empty !"]);
+            $this->db->closeDb();
+            exit ;
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            echo json_encode(['status' => 'error', 'message' => "The syntax of the email is not good"]);
+            $this->db->closeDb();
+            exit ;
+        }
+    }
+
     private function emptyRegister() {
         if (empty($this->username) || empty($this->email) || empty($this->password) || empty($this->confirmPassword)) {
             echo json_encode(['status' => 'error', 'message' => 'All fields must be completed !']);

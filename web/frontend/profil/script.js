@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 errorRegister.innerHTML = '';
             }, 3000);
         } else {
+            alert("An email has been sent to verify your account !");
             window.location.href = '/';
         }
 

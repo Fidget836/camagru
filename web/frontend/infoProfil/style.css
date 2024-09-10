@@ -1,0 +1,66 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.header {
+    background: #08a4a7;
+    color: black;
+    height: 7vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 15px;
+}
+
+#btnLogout {
+    width: 100px;
+    height: 35px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+}
+
+.main {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    margin: 5px 0px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+}
+
+.changeUsername, .changeEmail, .changePassword {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnSubmit {
+    width: 75px;
+    height: 25px;
+    background: #08a4a7;
+    margin-bottom: 25px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+}
+
+.errorMessageP {
+    background: red;
+    padding: 5px 15px;
+    border: 2px black solid;
+    border-radius: 5px;
+}

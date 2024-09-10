@@ -45,6 +45,36 @@ class AuthModel {
             echo json_encode(['status' => 'error', 'message' => 'Connection failed: ' . $e->getMessage()]);
         }
     }
+
+    public function changeUsername($user_id, $username) {
+        try {
+            $this->stmt = $this->db->conn->prepare("UPDATE users SET username = :newUsername WHERE id = :user_id");
+            $this->stmt->bindParam(":newUsername", $username);
+            $this->stmt->bindParam(":user_id", $user_id);
+            if ($this->stmt->execute()) {
+                echo json_encode(['status' => 'success', 'message' => 'The username have been update']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to update the username']);
+            }
+        } catch (PDOException $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Connection failed: ' . $e->getMessage()]);
+        }
+    }
+
+    public function changeEmail($user_id, $email) {
+        try {
+            $this->stmt = $this->db->conn->prepare("UPDATE users SET email = :newEmail WHERE id = :user_id");
+            $this->stmt->bindParam(":newEmail", $email);
+            $this->stmt->bindParam(":user_id", $user_id);
+            if ($this->stmt->execute()) {
+                echo json_encode(['status' => 'success', 'message' => 'The email have been update']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to update the email']);
+            }
+        } catch (PDOException $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Connection failed: ' . $e->getMessage()]);
+        }
+    }
 }
 
 ?>

@@ -1,11 +1,16 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const btnProfil = document.getElementById('btnProfil');
+    const btnInfoProfil = document.getElementById('btnInfoProfil');
     const btnLogout = document.getElementById('btnLogout');
     const btnPost = document.getElementById('btnPost');
     const feedMainDiv = document.getElementById('feedMainDiv');
     const btnMorePicture = document.getElementById("btnMorePicture");
     var feedCount = 0;
-    
+
+    btnInfoProfil.addEventListener('click', () => {
+        window.location.href = "/info-profil";
+    });
+
     btnProfil.addEventListener('click', () => {
         window.location.href = "/profil";
     });
@@ -39,9 +44,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (sessionData.loggedIn) {
         btnProfil.style.display = 'none';
+        btnInfoProfil.style.display = 'block';
         btnLogout.style.display = 'block';
         btnPost.style.display = 'block';
     } else {
+        btnInfoProfil.style.display = 'none';
         btnLogout.style.display = 'none';
         btnPost.style.display = 'none';
     }
