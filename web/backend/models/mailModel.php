@@ -23,6 +23,24 @@ class mailModel {
         }
     }
 
+    public function changePassword($token, $password) {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        $this->stmt = $this->db->conn->prepare("UPDATE users SET password = :password WHERE tokenPassword = :tokenPassword");
+        $this->stmt->bindParam(":password", $hashedPassword);
+        $this->stmt->bindParam(":tokenPassword", $token);
+        $this->stmt->execute();
+        $result = $this->stmt->rowCount();
+        if ($result !== 0) {
+            $this->stmt = $this->db->conn->prepare("UPDATE users SET tokenPassword = NULL WHERE tokenPassword = :tokenPassword");
+            $this->stmt->bindParam(":tokenPassword", $token);
+            $this->stmt->execute();
+            echo json_encode(['status' => 'success', 'message' => 'The password have been changed']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Your link to change password is not good']);
+        }
+    }
+
 };
 
 ?>

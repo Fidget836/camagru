@@ -90,6 +90,19 @@ class AuthController {
         }
     }
 
+    public function verifChangePassword($password, $confirmPassword) {
+        if (empty($password) || empty($confirmPassword)) {
+            echo json_encode(['status' => 'error', 'message' => 'All fields must be completed !']);
+            $this->db->closeDb();
+            exit ;
+        }
+
+        $this->password = $password;
+        $this->confirmPassword = $confirmPassword;
+        $this->isValidPassword();
+        $this->confirmPasswordEqual();
+    }
+
     private function emptyRegister() {
         if (empty($this->username) || empty($this->email) || empty($this->password) || empty($this->confirmPassword)) {
             echo json_encode(['status' => 'error', 'message' => 'All fields must be completed !']);

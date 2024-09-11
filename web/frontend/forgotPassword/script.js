@@ -13,7 +13,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         try {
             const result = await response.json();
-            console.log(result);
+            if (result.status === 'success'){
+                alert("You have received an email to change your password");
+                window.location.reload();
+            } else {
+                errorMessage.innerHTML = '<p class="errorMessageP">' + result.message + '</p>';
+                setTimeout(() => {
+                    errorMessage.innerHTML = '';
+                }, 3000);
+            }
         } catch (error) {
             console.log(error);
         }
