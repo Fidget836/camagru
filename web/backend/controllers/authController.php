@@ -2,13 +2,13 @@
 
 class AuthController {
     private $stateRegister = true;
+    private $db;
     private $stmt = null;
     private $count = 0;
     private $result = null;
     private $hashPassword = null;
 
     // Variables ext
-    private $db;
     private $username;
     private $email;
     private $password;
@@ -59,6 +59,32 @@ class AuthController {
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             echo json_encode(['status' => 'error', 'message' => "The syntax of the email is not good"]);
+            $this->db->closeDb();
+            exit ;
+        }
+    }
+
+    public function changePasswordDisconnect($username, $email) {
+        if (empty($username)) {
+            echo json_encode(['status' => 'error', 'message' => "The username can't be empty !"]);
+            $this->db->closeDb();
+            exit ;
+        }
+
+        if (empty($email)) {
+            echo json_encode(['status' => 'error', 'message' => "The email can't be empty !"]);
+            $this->db->closeDb();
+            exit ;
+        }
+
+        $this->stmt = $this->db->conn->prepare("SELECT COUNT(*) FROM users WHERE username = :username AND email = :email");
+        $this->stmt->bindParam(":username", $username);
+        $this->stmt->bindParam(":email", $email);
+        $this->stmt->execute();
+        $result = $this->stmt->fetch();
+
+        if ($result[0] !== 1) {
+            echo json_encode(['status' => 'error', 'message' => "The username or the email not match with your account"]);
             $this->db->closeDb();
             exit ;
         }

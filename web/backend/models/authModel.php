@@ -21,12 +21,41 @@ class AuthModel {
         }
     }
 
+    private function sendMailPassword($email, $token) {
+        $to = $email;
+        $subject = "Camagru - Change your password";
+        $message = "Click on this link to change your password : https://localhost:8443/changePassword?token=" . $token;
+        $headers = "From : tmarie@camagru.com";
+
+        if (mail($to, $subject, $message, $headers)) {
+            return (true);
+        } else {
+            return (false);
+        }
+    }
+
+    public function changePasswordDisconnect($username, $email) {
+        $token = bin2hex(random_bytes(50));
+
+        $this->stmt = $this->db->conn->prepare("UPDATE users SET tokenPassword = :token WHERE username = :username AND email = :email");
+        $this->stmt->bindParam(':token', $token);
+        $this->stmt->bindParam(':username', $username);
+        $this->stmt->bindParam(':email', $email);
+        $this->stmt->execute();
+
+        if($this->sendMailPassword($email, $token)) {
+            echo json_encode(['status' => 'success', 'message' => 'Mail for change password send sucessful !']);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Error in sendMailPassword !']);
+        }
+    }
+
     public function register($username, $email, $password) {
         try {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $token = bin2hex(random_bytes(50));
                     
-            $this->stmt = $this->db->conn->prepare("INSERT INTO users (username, email, password, token) VALUES (:username, :email, :password, :token);");
+            $this->stmt = $this->db->conn->prepare("INSERT INTO users (username, email, password, token) VALUES (:username, :email, :password, :token)");
 
             $this->stmt->bindParam(':username', $username);
             $this->stmt->bindParam(':email', $email);
