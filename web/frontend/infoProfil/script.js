@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnUsername = document.getElementById('btnUsername');
     const iptEmail = document.getElementById('iptEmail');
     const btnEmail = document.getElementById('btnEmail');
+    const iptPassword = document.getElementById('iptPassword');
+    const iptConfirmPassword = document.getElementById('iptConfirmPassword');
+    const btnPassword = document.getElementById('btnPassword');
     const errorMessage = document.getElementById('errorMessage');
 
 
@@ -61,6 +64,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             const result = await response.json();
             if (result.status === 'success') {
                 alert("You have changed your email");
+                window.location.reload();
+            } else {
+                errorMessage.innerHTML = '<p class="errorMessageP">' + result.message + '</p>';
+                setTimeout(() => {
+                    errorMessage.innerHTML = '';
+                }, 3000);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    btnPassword.addEventListener('click', async () => {
+        const formDataPassword = new FormData;
+        formDataPassword.append('user_id', sessionData.user_id);
+        formDataPassword.append('password', iptPassword.value);
+        formDataPassword.append('confirmPassword', iptConfirmPassword.value);
+
+        const response = await fetch("https://localhost:8443/backend/views/changePassword.php", {
+            body: formDataPassword,
+            method: "POST"
+        });
+        try {
+            const result = await response.json();
+            if (result.status === 'success') {
+                alert("You have changed your password");
                 window.location.reload();
             } else {
                 errorMessage.innerHTML = '<p class="errorMessageP">' + result.message + '</p>';

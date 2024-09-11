@@ -104,6 +104,22 @@ class AuthModel {
             echo json_encode(['status' => 'error', 'message' => 'Connection failed: ' . $e->getMessage()]);
         }
     }
-}
+
+    public function changePassword($user_id, $password) {
+        try {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            $this->stmt = $this->db->conn->prepare("UPDATE users SET password = :password WHERE id = :user_id");
+            $this->stmt->bindParam(":password", $hashedPassword);
+            $this->stmt->bindParam(":user_id", $user_id);
+            if ($this->stmt->execute()) {
+                echo json_encode(['status' => 'success', 'message' => 'The password have been update']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Failed to update the password']);
+            }
+        } catch (PDOException $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Connection failed: ' . $e->getMessage()]);
+        }
+    }}
 
 ?>
