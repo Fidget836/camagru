@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (result.ok) {
             try {
                 feed = await result.json();
+                
                 for (let i = 0; i < feed.result.length; i++) {
                     const element = feed.result[i];
                     
@@ -328,11 +329,36 @@ document.addEventListener('DOMContentLoaded', async () => {
                             });
 
 
-
-
-
                             likeDiv.appendChild(likeImg);
                             handleDiv.appendChild(likeDiv);
+
+                            if (element.user_id === sessionData.user_id) {
+                                let deleteDiv = document.createElement('div');
+                                deleteDiv.className = "deleteDiv";
+                                let deleteImg = document.createElement('img');
+                                deleteImg.className = "deleteImg";
+                                deleteImg.src = "frontend/pictures/trash.png";
+
+                                deleteImg.addEventListener('click', async () => {
+                                    const formDataDelete = new FormData;
+                                    formDataDelete.append('post_id', element.id);
+                                    formDataDelete.append('user_id', sessionData.user_id);
+                                    const response = await fetch("https://localhost:8443/backend/views/deletePicture.php", {
+                                        body: formDataDelete,
+                                        method: "POST"
+                                    });
+
+                                    try {
+                                        const result = await response.json();
+                                        window.location.reload();
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                });
+
+                                deleteDiv.appendChild(deleteImg);
+                                handleDiv.appendChild(deleteDiv);
+                            }
 
 
                             pictureFeedDiv.appendChild(handleDiv);

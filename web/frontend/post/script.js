@@ -16,8 +16,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const uploadImageInput = document.getElementById('uploadImage');
     const uploadCanvas = document.getElementById('uploadCanvas');
     const uploadContext = uploadCanvas.getContext('2d');
-    const btnUploadCapture = document.getElementById('btnUploadCapture');
     const btnLogout = document.getElementById('btnLogout');
+    const btnUploadCapture = document.getElementById('btnUploadCapture');
+    btnUploadCapture.disabled = true;
 
     // Doit être en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
@@ -173,28 +174,34 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     uploadImageInput.addEventListener('change', () => {
         const file = uploadImageInput.files[0];
-        if (file) {
+    
+        // Vérifier que le fichier est bien une image
+        if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = function(event) {
                 const img = new Image();
                 img.onload = function() {
-                    // Calculer les nouvelles dimensions tout en conservant le ratio
                     let maxWidth = sizePictureWidth;
                     let maxHeight = sizePictureWidth;
                     let ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
     
-                    // Nouvelles dimensions de l'image
                     let newWidth = img.width * ratio;
                     let newHeight = img.height * ratio;
     
-                    // Redimensionner le canvas et dessiner l'image redimensionnée
                     uploadCanvas.width = newWidth;
                     uploadCanvas.height = newHeight;
                     uploadContext.drawImage(img, 0, 0, newWidth, newHeight);
+    
+                    // Activer le bouton après l'upload
+                    btnUploadCapture.disabled = false;
                 };
                 img.src = event.target.result;
             };
             reader.readAsDataURL(file);
+        } else {
+            alert('Please upload a valid image file (jpg, png, gif, etc.)');
+            uploadImageInput.value = '';  // Réinitialise l'input file
+            btnUploadCapture.disabled = true;  // Désactive le bouton si ce n'est pas une image
         }
     });
 

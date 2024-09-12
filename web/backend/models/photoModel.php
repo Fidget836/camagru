@@ -49,7 +49,7 @@ class photoModel {
     }
 
     public function recoverFeed($offset, $nbPicture) {
-        $this->stmt = $this->db->conn->prepare("SELECT id, photoData FROM posts ORDER BY create_at DESC LIMIT ? OFFSET ?");
+        $this->stmt = $this->db->conn->prepare("SELECT id, user_id, photoData FROM posts ORDER BY create_at DESC LIMIT ? OFFSET ?");
         $this->stmt->bindParam(1, $nbPicture, PDO::PARAM_INT);
         $this->stmt->bindParam(2, $offset, PDO::PARAM_INT);
         $this->stmt->execute();
@@ -65,11 +65,26 @@ class photoModel {
         foreach ($pictures as $picture) {
             $picturesBase64[] = [
                 'id' => $picture['id'], // Inclure l'ID
+                'user_id' => $picture['user_id'], // Inclure l'ID
                 'photoData' => base64_encode($picture['photoData']) // Encoder la photo en base64
             ];
         }
 
         echo json_encode(['status' => 'success', 'result' => $picturesBase64]);
     }
+
+    public function deletePicture($post_id, $user_id) {
+        $this->stmt = $this->db->conn->prepare("DELETE FROM posts WHERE id = :post_id AND user_id = :user_id");
+        $this->stmt->bindParam(":post_id", $post_id);
+        $this->stmt->bindParam(":user_id", $user_id);
+        $this->stmt->execute();
+        $result = $this->stmt->rowCount();
+        if ($result !== 0) {
+            echo json_encode(['status' => 'success', 'message' => "Your picture have been deleted !"]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => "Problem to delete the picture"]);
+        }
+    }
+
 }
 ?>
