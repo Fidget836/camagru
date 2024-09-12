@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const uploadCanvas = document.getElementById('uploadCanvas');
     const uploadContext = uploadCanvas.getContext('2d');
     const btnUploadCapture = document.getElementById('btnUploadCapture');
+    const btnLogout = document.getElementById('btnLogout');
 
     // Doit être en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
@@ -51,7 +52,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             sizePictureHeight = 480;
         }
 
-
+        btnLogout.addEventListener('click', async () => {
+            const response = await fetch('https://localhost:8443/backend/views/logout.php');
+            const data = await response.json();
+            if (data.status === 'success') {
+                window.location.href = '/';
+            }
+        });
 
     // Fonction pour charger les images précédentes
     const formDataList = new FormData();
