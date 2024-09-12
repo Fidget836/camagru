@@ -19,13 +19,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = '/';
         return ;
     };
-
-    if (sessionData.notification === true) {
+    
+    const formDataNotif = new FormData;
+    formDataNotif.append('user_id', sessionData.user_id);
+    const responseNotif = await fetch('https://localhost:8443/backend/views/getNotification.php', {
+        body: formDataNotif,
+        method: "POST"
+    });
+    const resultNotif = await responseNotif.json();
+    if (resultNotif.message == true) {
         btnON.classList.add('active');
     } else {
         btnOFF.classList.add('active');
     }
-    
 
     btnLogout.addEventListener('click', async () => {
         const response = await fetch('https://localhost:8443/backend/views/logout.php');
@@ -109,5 +115,56 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.log(error);
         }
+    });
+
+    btnON.addEventListener('click', async () => {
+        const formDatabtnON = new FormData;
+        formDatabtnON.append('user_id', sessionData.user_id);
+
+        const response = await fetch("https://localhost:8443/backend/views/notificationON.php", {
+            body: formDatabtnON,
+            method: "POST"
+        });
+        try {
+            const result = await response.json();
+            if (result.status === 'success') {
+                alert("You have active your notification");
+                window.location.reload();
+            } else {
+                errorMessage.innerHTML = '<p class="errorMessageP">' + result.message + '</p>';
+                setTimeout(() => {
+                    errorMessage.innerHTML = '';
+                }, 3000);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
+    });
+
+
+    btnOFF.addEventListener('click', async () => {
+        const formDatabtnOFF = new FormData;
+        formDatabtnOFF.append('user_id', sessionData.user_id);
+
+        const response = await fetch("https://localhost:8443/backend/views/notificationOFF.php", {
+            body: formDatabtnOFF,
+            method: "POST"
+        });
+        try {
+            const result = await response.json();
+            if (result.status === 'success') {
+                alert("You have desactive your notification");
+                window.location.reload();
+            } else {
+                errorMessage.innerHTML = '<p class="errorMessageP">' + result.message + '</p>';
+                setTimeout(() => {
+                    errorMessage.innerHTML = '';
+                }, 3000);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+
     });
 });
