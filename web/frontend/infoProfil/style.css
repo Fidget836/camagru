@@ -58,6 +58,27 @@ input {
     cursor: pointer;
 }
 
+.notification {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnNotif {
+    width: 75px;
+    height: 25px;
+    margin-bottom: 25px;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: black;
+    cursor: pointer;
+}
+
+.active {
+    background: #08a4a7;
+}
+
 .errorMessageP {
     background: red;
     padding: 5px 15px;

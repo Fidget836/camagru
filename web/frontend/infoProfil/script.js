@@ -11,12 +11,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const iptConfirmPassword = document.getElementById('iptConfirmPassword');
     const btnPassword = document.getElementById('btnPassword');
     const errorMessage = document.getElementById('errorMessage');
+    const btnON = document.getElementById('btnON');
+    const btnOFF = document.getElementById('btnOFF');
 
 
     if (!sessionData.loggedIn) {
         window.location.href = '/';
         return ;
     };
+
+    if (sessionData.notification === true) {
+        btnON.classList.add('active');
+    } else {
+        btnOFF.classList.add('active');
+    }
+    
 
     btnLogout.addEventListener('click', async () => {
         const response = await fetch('https://localhost:8443/backend/views/logout.php');

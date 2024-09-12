@@ -193,7 +193,8 @@ class AuthController {
 
         // Store user information in session
         $_SESSION['user_id'] = $this->result['id'];
-        $_SESSION['username'] = $this->username;
+        $_SESSION['username'] = $this->result['username'];
+        $_SESSION['notification'] = $this->result['notification'];
         echo json_encode(['status' => 'success', 'message' => 'Login sucessful !']);
     }
 }
