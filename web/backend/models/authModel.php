@@ -12,7 +12,7 @@ class AuthModel {
         $to = $email;
         $subject = "Camagru - Validation account";
         $message = "Click on this link to valid your account : https://localhost:8443/backend/views/verifyMail.php?token=" . $token;
-        $headers = "From : tmarie@camagru.com";
+        $headers = "From : admin@camagru.com";
 
         if (mail($to, $subject, $message, $headers)) {
             return (true);
@@ -25,7 +25,7 @@ class AuthModel {
         $to = $email;
         $subject = "Camagru - Change your password";
         $message = "Click on this link to change your password : https://localhost:8443/changePassword?token=" . $token;
-        $headers = "From : tmarie@camagru.com";
+        $headers = "From : admin@camagru.com";
 
         if (mail($to, $subject, $message, $headers)) {
             return (true);

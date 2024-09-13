@@ -36,6 +36,25 @@ class commentModel {
             echo json_encode(['status' => 'error', 'message' => 'Get comment failed']);
         }
     }
+
+    public function sendMailNewComment($post_id, $comment) {
+        $this->stmt = $this->db->conn->prepare("SELECT user_id FROM posts WHERE id = :post_id");
+        $this->stmt->bindParam(":post_id", $post_id);
+        $this->stmt->execute();
+        $result = $this->stmt->fetch();
+        
+
+        $this->stmt = $this->db->conn->prepare("SELECT email FROM users WHERE id = :user_id");
+        $this->stmt->bindParam(":user_id", $result['user_id']);
+        $this->stmt->execute();
+        $result = $this->stmt->fetch();
+
+        $to = $result['email'];
+        $subject = "Camagru - You have a new comment on one of your posts";
+        $message = "Comment : " . $comment;
+        $headers = "From : admin@camagru.com";
+        mail($to, $subject, $message, $headers);
+    }
 }
 
 ?>
