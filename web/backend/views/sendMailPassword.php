@@ -9,13 +9,10 @@
         $email = $_POST['email'];
 
         $db = new Db();
-        error_log("Test 111");
         $authController = new authController($db);
         $authController->changePasswordDisconnect($username, $email);
-        error_log("Test 222");
         $authModel = new authModel($db);
         $authModel->changePasswordDisconnect($username, $email);
-        error_log("Test 333");
         $db->closeDb();
     }
 

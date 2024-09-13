@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const response = await fetch('https://localhost:8443/backend/views/sessionStatus.php');
-    const sessionData = await response.json();
+    var sessionData = await response.json();
 
     const video = document.getElementById('videoElement');
     const canvas = document.getElementById('canvas');
@@ -24,6 +24,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!sessionData.loggedIn) {
         window.location.href = '/';
         return ;
+    } else {
+        const formDataSession = new FormData;
+        formDataSession.append('user_id', sessionData.user_id);
+        const responseSession = await fetch('https://localhost:8443/backend/views/updateSession.php', {
+            body: formDataSession,
+            method: "POST"
+        });
+        sessionData = await responseSession.json();
     }
 
     if (navigator.mediaDevices.getUserMedia) {

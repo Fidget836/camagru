@@ -16,7 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $photoDecoded = base64_decode($photoData);
 
         if ($photoDecoded === false) {
-            error_log('Erreur lors du décodage de la photo base64');
             http_response_code(400);
             echo 'Erreur lors du décodage de la photo.';
             exit;
@@ -25,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Créer l'image de la webcam
         $photo = imagecreatefromstring($photoDecoded);
         if (!$photo) {
-            error_log('Erreur lors de la création de l\'image à partir de la photo.');
             http_response_code(400);
             echo 'Erreur lors de la création de l\'image à partir de la photo.';
             exit;
@@ -34,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Charger l'image du sticker à partir de l'URL
         $sticker = imagecreatefrompng("../../frontend/post/stickers/" . $stickerFilename);
         if (!$sticker) {
-            error_log('Erreur lors de la création de l\'image à partir du sticker.');
             http_response_code(400);
             echo 'Erreur lors de la création de l\'image à partir du sticker.';
             exit;

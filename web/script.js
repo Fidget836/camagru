@@ -40,13 +40,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Check login status
     const response = await fetch('https://localhost:8443/backend/views/sessionStatus.php');
-    const sessionData = await response.json();
+    var sessionData = await response.json();
 
     if (sessionData.loggedIn) {
         btnProfil.style.display = 'none';
         btnInfoProfil.style.display = 'block';
         btnLogout.style.display = 'block';
         btnPost.style.display = 'block';
+
+        const formDataSession = new FormData;
+        formDataSession.append('user_id', sessionData.user_id);
+        const responseSession = await fetch('https://localhost:8443/backend/views/updateSession.php', {
+            body: formDataSession,
+            method: "POST"
+        });
+        sessionData = await responseSession.json();
     } else {
         btnInfoProfil.style.display = 'none';
         btnLogout.style.display = 'none';
