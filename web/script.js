@@ -198,14 +198,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                                                     commentRead.classList.add("commentP");  
                                                     commentListDiv.appendChild(commentRead);
                                                 }
+                                                console.log(sessionData.notification);
                                                 
-                                                const formDataCommentMail = new FormData;
-                                                formDataCommentMail.append('post_id', element.id);
-                                                formDataCommentMail.append('comment', commentValue);
-                                                await fetch('https://localhost:8443/backend/views/sendMailNewComment.php', {
-                                                    method: 'POST',
-                                                    body: formDataCommentMail
-                                                });
+                                                if (sessionData.notification === 1) {
+                                                    const formDataCommentMail = new FormData;
+                                                    formDataCommentMail.append('post_id', element.id);
+                                                    formDataCommentMail.append('comment', commentValue);
+                                                    await fetch('https://localhost:8443/backend/views/sendMailNewComment.php', {
+                                                        method: 'POST',
+                                                        body: formDataCommentMail
+                                                    });
+                                                }
                                                 
                                             } else {
                                                 const errorText = await response.text();
