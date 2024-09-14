@@ -62,6 +62,9 @@ class AuthController {
             $this->db->closeDb();
             exit ;
         }
+
+        $this->email = $email;
+        $this->uniciteEmail();
     }
 
     public function changePasswordDisconnect($username, $email) {
@@ -128,18 +131,28 @@ class AuthController {
     }
 
     private function isValidPassword() {
-        if (strlen($this->password) < 12            ||
-            !preg_match('/[a-z]/', $this->password) ||
+        if (strlen($this->password) < 12 || strlen($this->password) > 64) {
+            echo json_encode(['status' => 'error', 'message' => 'The password need at least 12 characters and max 64 characters']);
+            $this->db->closeDb();
+            exit ;
+        }
+        if (!preg_match('/[a-z]/', $this->password) ||
             !preg_match('/[A-Z]/', $this->password) || 
             !preg_match('/[0-9]/', $this->password) ||
             !preg_match('/[\W_]/', $this->password) ) {
-                echo json_encode(['status' => 'error', 'message' => 'The password need at least 12 characters, one capital letter, one lowercase letter, one number and one special character']);
+                echo json_encode(['status' => 'error', 'message' => 'The password need at least one capital letter, one lowercase letter, one number and one special character']);
                 $this->db->closeDb();
                 exit ;
         }
     }
 
     private function uniciteUser() {
+        if (strlen($this->username) > 30) {
+            echo json_encode(['status' => 'error', 'message' => 'The username can have max 30 characters']);
+            $this->db->closeDb();
+            exit ;
+        }
+
         $this->stmt = $this->db->conn->prepare("SELECT COUNT(*) FROM users WHERE username = :username");
         $this->stmt->bindParam(':username', $this->username);
         $this->stmt->execute();
@@ -152,6 +165,12 @@ class AuthController {
     }
 
     private function uniciteEmail() {
+        if (strlen($this->email) > 254) {
+            echo json_encode(['status' => 'error', 'message' => 'The email can have max 254 characters']);
+            $this->db->closeDb();
+            exit ;
+        }
+
         $this->stmt = $this->db->conn->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
         $this->stmt->bindParam(':email', $this->email);
         $this->stmt->execute();

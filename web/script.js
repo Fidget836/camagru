@@ -198,7 +198,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                                     commentRead.classList.add("commentP");  
                                                     commentListDiv.appendChild(commentRead);
                                                 }
-                                                console.log(sessionData.notification);
                                                 
                                                 if (sessionData.notification === 1) {
                                                     const formDataCommentMail = new FormData;

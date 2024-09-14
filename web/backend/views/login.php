@@ -1,9 +1,9 @@
 <?php
 session_start([
-    'cookie_lifetime' => 86400, // Durée de vie du cookie (en secondes)
-    'cookie_secure' => true, // Assurez-vous que vous utilisez HTTPS
-    'cookie_httponly' => true, // Le cookie ne sera pas accessible via JavaScript
-    'cookie_samesite' => 'Lax', // ou 'Strict' ou 'None' selon vos besoins
+    'cookie_lifetime' => 86400,
+    'cookie_secure' => true,
+    'cookie_httponly' => true,
+    'cookie_samesite' => 'Lax',
 ]);
 
 include '../db/db.php';
