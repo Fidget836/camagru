@@ -4,23 +4,49 @@
 }
 
 .header {
-    background: #08a4a7;
+    background: #c8aa8f;
     color: black;
-    height: 7vh;
+    width: 100vw;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    margin-bottom: 15px;
+    position: sticky;
+    top: 0;
+    left: 0;
 }
 
-#btnLogout {
-    width: 100px;
-    height: 35px;
+.title {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 5px 0px;
+    font-size: 1rem;
+}
+
+.title a{
+    color: black;
+}
+
+.divBtnMenu {
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 8px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.btnLogout {
+    box-sizing: border-box;
+    padding: 3px 8px;
     background: none;
     border: 2px solid black;
     border-radius: 5px;
-    color: black;
     cursor: pointer;
+    font-size: 0.8rem;
 }
 
 .main {
@@ -28,51 +54,57 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+}
+
+.changeUsername, .changeEmail, .changePassword, .notification {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 15px 10px;
+}
+
+.labelChange {
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 input {
     margin: 5px 0px;
-    padding: 10px;
+    padding: 8px;
     border: 2px solid black;
     border-radius: 5px;
     color: black;
     cursor: pointer;
-}
-
-.changeUsername, .changeEmail, .changePassword {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .btnSubmit {
-    width: 75px;
-    height: 25px;
-    background: #08a4a7;
-    margin-bottom: 25px;
+    box-sizing: border-box;
+    padding: 3px 8px;
+    background: none;
     border: 2px solid black;
     border-radius: 5px;
-    color: black;
     cursor: pointer;
+    font-size: 0.8rem;
 }
 
-.notification {
+.btnNotifDiv {
+    width: 100vw;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 .btnNotif {
-    width: 75px;
-    height: 25px;
-    margin-bottom: 25px;
+    box-sizing: border-box;
+    padding: 3px 8px;
+    margin: 10px;
+    background: none;
     border: 2px solid black;
     border-radius: 5px;
-    color: black;
     cursor: pointer;
+    font-size: 0.8rem;
 }
 
 .active {
