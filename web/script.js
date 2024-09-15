@@ -60,6 +60,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         btnLogout.style.display = 'none';
         btnPost.style.display = 'none';
     }
+
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+    };
     
     const recoverComment = async (id, nbPicture) => {
         const formDataGetComment = new FormData;
@@ -149,7 +153,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                             try {
                                 const resultUsername = await responseUsername.json();
-                                console.log(resultUsername);
                                 let usernameP = document.createElement('p');
                                 usernameP.className = 'usernameP';
                                 usernameP.textContent = "Posted by " + resultUsername.message; // 'textContent' for secure against the inject html or js

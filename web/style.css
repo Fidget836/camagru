@@ -66,6 +66,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background: #ede3da;
 }
 
 .feedMainDiv {
@@ -82,14 +83,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-top: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .usernameDiv {
     width: 100vw;
     box-sizing: border-box;
     padding: 8px;
-    background: #ede3da;
 }
 
 .handleDiv {
@@ -100,7 +100,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #ede3da;
 }
 
 .iconDiv {
@@ -183,4 +182,13 @@
     border-radius: 5px;
     cursor: pointer;
     margin: 15px 0px;
+}
+
+.footer {
+    background: #c8aa8f;
+    color: black;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: right;
 }
