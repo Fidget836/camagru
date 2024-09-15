@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnPost = document.getElementById('btnPost');
     const feedMainDiv = document.getElementById('feedMainDiv');
     const btnMorePicture = document.getElementById("btnMorePicture");
+    const header = document.getElementById('header');
     var feedCount = 0;
 
     btnInfoProfil.addEventListener('click', () => {
@@ -35,7 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     //     sizePictureWidth = 640;
     //     sizePictureHeight = 480;
     // }
-
 
 
     // Check login status
@@ -136,6 +136,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                             // Create div for picture
                             let pictureFeedDiv = document.createElement('div');
                             pictureFeedDiv.className = 'pictureFeed';
+
+
+                            let usernameDiv = document.createElement('div');
+                            usernameDiv.className = 'usernameDiv';
+                            const formDataUsername = new FormData;
+                            formDataUsername.append('user_id', element.user_id);
+                            const responseUsername = await fetch("https://localhost:8443/backend/views/getUsername.php", {
+                                body: formDataUsername,
+                                method: "POST"
+                            });
+
+                            try {
+                                const resultUsername = await responseUsername.json();
+                                console.log(resultUsername);
+                                let usernameP = document.createElement('p');
+                                usernameP.className = 'usernameP';
+                                usernameP.textContent = "Posted by " + resultUsername.message; // 'textContent' for secure against the inject html or js
+                                usernameDiv.appendChild(usernameP);
+                            } catch (error) {
+                                console.log(error);
+                            }
+                            pictureFeedDiv.appendChild(usernameDiv);
 
                             let imgElement = document.createElement('img');
                             imgElement.className = 'imgFeed';

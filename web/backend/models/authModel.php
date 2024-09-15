@@ -34,6 +34,17 @@ class AuthModel {
         }
     }
 
+    public function getUsername($user_id) {
+        $this->stmt = $this->db->conn->prepare("SELECT username FROM users WHERE id = :user_id");
+        $this->stmt->bindParam(':user_id', $user_id);
+        if ($this->stmt->execute()) {
+            $result = $this->stmt->fetch(PDO::FETCH_ASSOC);
+            echo json_encode(["status" => "success", "message" => $result['username']]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Error to getUsername"]);
+        }
+    }
+
     public function changePasswordDisconnect($username, $email) {
         $token = bin2hex(random_bytes(50));
 
