@@ -1,27 +1,252 @@
 * {
-    margin: 0;
     padding: 0;
-}
-
-.postPage {
-    width: 100vw;
-    height: 100vh;
+    margin: 0;
 }
 
 .header {
-    background: #08a4a7;
+    background: #c8aa8f;
     color: black;
     width: 100vw;
-    height: 7vh;
-    position: fixed;
-    top: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
+.title {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 5px 0px;
+    font-size: 1rem;
+}
+
+.title a{
+    color: black;
+}
+
+.divBtnMenu {
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 8px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.btnLogout {
+    box-sizing: border-box;
+    padding: 3px 8px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
 
 .main {
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ede3da;
+}
+
+.pictures {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.h3Pictures {
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    padding: 10px 0px;
+}
+
+.picturesDiv {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes de largeur égale */
+    gap: 15px; /* Espace entre les images */
+    justify-items: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.webcam {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.h3Webcam {
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    padding: 10px 0px;
+}
+
+.videoElement {
+    width: 100vw;
+}
+
+.canvas {
+    display: none;
+}
+
+.btnCapture {
+    box-sizing: border-box;
+    padding: 3px 8px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 10px 0px;
+}
+
+.upload {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.h3Upload {
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    padding: 10px 0px;
+}
+
+.uploadImage::file-selector-button {
+    box-sizing: border-box;
+    padding: 3px 8px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 10px 0px;
+}
+
+.btnUploadCapture {
+    box-sizing: border-box;
+    padding: 3px 8px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 10px 0px;
+}
+
+.stickers {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.h3Stickers {
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    padding: 10px 0px;
+}
+
+.formSticker {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes de taille égale */
+    gap: 20px; /* espace entre les stickers */
+    justify-items: center;
+    align-items: center;
+}
+
+.travel_input, .gamepad_input, .hamburger_input, .panda_input, .trophy_input, .parrot_input {
+    opacity: 0;
+}
+
+.activeSticker {
+    background: #c8aa8f;
+    border-radius: 5px;
+}
+
+.footer {
+    background: #c8aa8f;
+    color: black;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: right;
+}
+
+.footerP a {
+    font-size: 1rem;
+    color: black;
+}
+
+.validPicture {
+    width: 100vw;
+    min-height: 100vh;
+    background: #ede3da;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+}
+
+.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.h3ValidPicture {
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    padding: 10px 0px;
+}
+
+.btnHome {
+    box-sizing: border-box;
+    padding: 3px 8px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 10px 0px;
+}
+
+.btnAnotherPicture {
+    box-sizing: border-box;
+    padding: 3px 8px;
+    background: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 10px 0px;
+}
+
+/* .main {
     width: 100vw;
     min-height: 100vh;
     display: flex;
@@ -29,7 +254,6 @@
 
 .pictures {
     width: 20%;
-    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -46,7 +270,6 @@
 
 .webcam {
     width: 60%;
-    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +292,6 @@
 
 .stickers {
     width: 20%;
-    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -116,7 +338,6 @@ button {
     pointer-events: auto;
 }
 
-/* Si la largeur de la fenêtre est entre 950px et 1300px */
 @media (min-width: 950px) and (max-width: 1300px) {
     .main {
         flex-direction: column;
@@ -165,4 +386,4 @@ button {
     .validPicture {
         height: 340vh;
     }
-}
+} */

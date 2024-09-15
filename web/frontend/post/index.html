@@ -7,72 +7,93 @@
     <title>Post</title>
 </head>
 <body>
-    <div class="postPage">
-        <div class="header">
-            <h2> <a href="/">Camagru - Post</a> </h2>
-            <button id="btnLogout">Logout</button>
+    <div class="header">
+        <div class="title">
+            <h2><a href="/">Camagru - Info Profil</a></h2>
         </div>
-        <div class="main">
-            <div class="pictures" id="pictures">
-                <h3>Previous pictures</h3>
-                <div id="picturesDiv"></div>
-            </div>
-        
-            <div class="webcam" id="webcam">
-                <h3 id="h3Webcam">Webcam</h3>
-                <video autoplay="true" id="videoElement"></video>
-                <canvas id="canvas"></canvas>
-                <button id="btnCapture">Take the picture !</button>
+        <div class="divBtnMenu">
+            <button class="btnLogout" id="btnLogout">Logout</button>
+        </div>
+    </div>
+    <div class="main" id="main">
+        <div class="pictures" id="pictures">
+            <h3 class="h3Pictures">Previous pictures</h3>
+            <div class="picturesDiv" id="picturesDiv"></div>
+        </div>
+    
+        <div class="webcam" id="webcam">
+            <h3 class="h3Webcam" id="h3Webcam">Webcam</h3>
+            <video autoplay="true" class="videoElement" id="videoElement"></video>
+            <canvas class="canvas" id="canvas"></canvas>
+            <button class="btnCapture" id="btnCapture">Take the picture</button>
 
-                <div class="upload">
-                    <h3>Upload a picture</h3>
-                    <input type="file" id="uploadImage" accept="image/*">
-                    <canvas id="uploadCanvas"></canvas>
-                    <button id="btnUploadCapture">Add sticker to uploaded image!</button>
+            <div class="upload">
+                <h3 class="h3Upload">Upload a picture</h3>
+                <input type="file" class="uploadImage" id="uploadImage" accept="image/*">
+                <canvas class="uploadCanvas" id="uploadCanvas"></canvas>
+                <button class="btnUploadCapture" id="btnUploadCapture">Add sticker</button>
+            </div>
+        </div>
+        
+    
+        <div class="stickers">
+            <h3 class="h3Stickers">Stickers</h3>
+            <form class="formSticker" id="formSticker">
+                <div class="travel_div">
+                    <input type="radio" class="travel_input" id="travel" name="stickerChoice" value="travel.png" checked>
+                    <label for="travel">
+                        <img src="frontend/post/stickers/travel.png" alt="travel" class="travelImg" id="travelImg">
+                    </label>
                 </div>
-            </div>
-            
-        
-            <div class="stickers">
-                <form id="formSticker">
-                    <div class="french_flag">
-                        <input type="radio" id="french_flag" name="stickerChoice" value="french_flag.png" checked>
-                        <label for="french_flag">
-                            <img src="frontend/post/stickers/french_flag.png" alt="french_flag">
-                        </label>
-                    </div>
 
-                    <div class="penguin">
-                        <input type="radio" id="penguin" value="penguin.png" name="stickerChoice">
-                        <label for="penguin">
-                            <img src="frontend/post/stickers/penguin.png" alt="penguin">
-                        </label>
-                    </div>
+                <div class="trophy_div">
+                    <input type="radio" class="trophy_input" id="trophy" name="stickerChoice" value="trophy.png">
+                    <label for="trophy">
+                        <img src="frontend/post/stickers/trophy.png" alt="trophy" class="trophyImg" id="trophyImg">
+                    </label>
+                </div>
 
-                    <div class="tacos">
-                        <input type="radio" id="tacos" value="tacos.png" name="stickerChoice">
-                        <label for="tacos">
-                            <img src="frontend/post/stickers/tacos.png" alt="tacos">
-                        </label>
-                    </div>
+                <div class="parrot_div">
+                    <input type="radio" class="parrot_input" id="parrot" name="stickerChoice" value="parrot.png">
+                    <label for="parrot">
+                        <img src="frontend/post/stickers/parrot.png" alt="parrot" class="parrotImg" id="parrotImg">
+                    </label>
+                </div>
 
-                    <div class="butterfly">
-                        <input type="radio" id="butterfly" value="butterfly.png" name="stickerChoice">
-                        <label for="butterfly">
-                            <img src="frontend/post/stickers/butterfly.png" alt="butterfly">
-                        </label>
-                    </div>
-                </form>
-            </div>
+                <div class="gamepad_div">
+                    <input type="radio" class="gamepad_input" id="gamepad" value="gamepad.png" name="stickerChoice">
+                    <label for="gamepad">
+                        <img src="frontend/post/stickers/gamepad.png" alt="gamepad" class="gamepadImg" id="gamepadImg">
+                    </label>
+                </div>
 
+                <div class="hamburger_div">
+                    <input type="radio" class="hamburger_input" id="hamburger" value="hamburger.png" name="stickerChoice">
+                    <label for="hamburger">
+                        <img src="frontend/post/stickers/hamburger.png" alt="hamburger" class="hamburgerImg" id="hamburgerImg">
+                    </label>
+                </div>
+
+                <div class="panda_div">
+                    <input type="radio" class="panda_input" id="panda" value="panda.png" name="stickerChoice">
+                    <label for="panda">
+                        <img src="frontend/post/stickers/panda.png" alt="panda" class="pandaImg" id="pandaImg">
+                    </label>
+                </div>
+            </form>
         </div>
 
-        <div class="validPicture">
-                <h3>Picture</h3>
-                <div class="pictureValid"></div>
-                <button id="btnHome">Go Home</button>
-                <button id="btnAnotherPicture">Take another picture</button>
+        <div class="footer">
+            <p class="footerP"> <a href="https://github.com/Fidget836" target="_blank">Camagru by tmarie</a></p>
         </div>
+
+    </div>
+
+    <div class="validPicture">
+            <h3 class="h3ValidPicture">Picture</h3>
+            <div class="pictureValid"></div>
+            <button class="btnHome" id="btnHome">Go Home</button>
+            <button class="btnAnotherPicture" id="btnAnotherPicture">Take another picture</button>
     </div>
     <script src="./frontend/post/script.js"></script>
 </body>

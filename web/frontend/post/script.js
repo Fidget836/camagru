@@ -18,6 +18,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const uploadContext = uploadCanvas.getContext('2d');
     const btnLogout = document.getElementById('btnLogout');
     const btnUploadCapture = document.getElementById('btnUploadCapture');
+    const formSticker = document.getElementById('formSticker');
+    const travelImg = document.getElementById('travelImg');
+    const gamepadImg = document.getElementById('gamepadImg');
+    const hamburgerImg = document.getElementById('hamburgerImg');
+    const pandaImg = document.getElementById('pandaImg');
+    const parrotImg = document.getElementById('parrotImg');
+    const trophyImg = document.getElementById('trophyImg');
+    const main = document.getElementById('main');
     btnUploadCapture.disabled = true;
 
     // Doit être en premier !! Check si la personne est bien login
@@ -44,39 +52,69 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
     }
 
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+    };
 
         // Size of picture
         const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        var sizePictureWidth;
-        var sizePictureHeight;
-        if (windowWidth < 950) {
-            sizePictureWidth = 240;
-            sizePictureHeight = 180;
-        } else if (windowWidth < 1300) {
-            sizePictureWidth = 480;
-            sizePictureHeight = 360;
-        } else {
-            sizePictureWidth = 640;
-            sizePictureHeight = 480;
-        }
+        const windowHeight = windowWidth / 1.333;
+        var sizePictureWidth = windowWidth;
+        var sizePictureHeight = windowHeight;
 
-        btnLogout.addEventListener('click', async () => {
-            const response = await fetch('https://localhost:8443/backend/views/logout.php');
-            const data = await response.json();
-            if (data.status === 'success') {
-                window.location.href = '/';
-            }
-        });
+
+        // const windowWidth = window.innerWidth;
+        // const windowHeight = window.innerHeight;
+        // var sizePictureWidth;
+        // var sizePictureHeight;
+        // if (windowWidth < 950) {
+        //     sizePictureWidth = 240;
+        //     sizePictureHeight = 180;
+        // } else if (windowWidth < 1300) {
+        //     sizePictureWidth = 480;
+        //     sizePictureHeight = 360;
+        // } else {
+        //     sizePictureWidth = 640;
+        //     sizePictureHeight = 480;
+        // }
+
+    btnLogout.addEventListener('click', async () => {
+        const response = await fetch('https://localhost:8443/backend/views/logout.php');
+        const data = await response.json();
+        if (data.status === 'success') {
+            window.location.href = '/';
+        }
+    });
 
     // Fonction pour charger les images précédentes
     const formDataList = new FormData();
     formDataList.append('id', sessionData.user_id);
-    formDataList.append('nbPicture', 5);
+    formDataList.append('nbPicture', 6);
 
     const listPreviousPicturesResponse = await fetch("https://localhost:8443/backend/views/getPhoto.php", {
         method: 'POST',
         body: formDataList
+    });
+
+    for(let i = 0; i < formSticker.length; i++) {
+        if (formSticker[i].checked)
+        {
+            const img = document.getElementById(formSticker[i].id + 'Img');
+            img.classList.add("activeSticker");
+        }
+        
+    }
+    
+
+    formSticker.addEventListener('change', (event) => {
+        travelImg.classList.remove("activeSticker");
+        gamepadImg.classList.remove("activeSticker");
+        hamburgerImg.classList.remove("activeSticker");
+        pandaImg.classList.remove("activeSticker");
+        trophyImg.classList.remove("activeSticker");
+        parrotImg.classList.remove("activeSticker");
+        const img = document.getElementById(event.target.id + 'Img');
+        img.classList.add("activeSticker");
     });
 
     // Afficher les images précédentes
@@ -86,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Effacer les anciennes images si nécessaire
         pictureDiv.innerHTML = ''; 
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             if (listPreviousPictures.result[i] === undefined) break;
             const element = listPreviousPictures.result[i];
             
@@ -98,8 +136,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const canvasThumbnail = document.createElement('canvas');
                     const contextThumbnail = canvasThumbnail.getContext('2d');
 
-                    const thumbnailWidth = 177;
-                    const thumbnailHeight = 100;
+                    const thumbnailWidth = sizePictureWidth / 2.5;
+                    const thumbnailHeight = sizePictureHeight / 2.5;
                     let width = img.width;
                     let height = img.height;
                     if (width > height) {
@@ -142,6 +180,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         }
 
+        main.style.display = "none";
+
         canvas.width = sizePictureWidth;
         canvas.height = sizePictureHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -155,6 +195,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         formData.append('canvaWidth', canvas.width);
         formData.append('canvaHeight', canvas.height);
         formData.append('id', sessionData.user_id);
+        
 
         const response = await fetch("https://localhost:8443/backend/views/photo.php", {
             method: 'POST',
@@ -221,6 +262,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 sticker = radios[i].value;
             }
         }
+
+        main.style.display = "none";
 
         // Conversion de l'image en data URL (base64)
         const dataUrl = uploadCanvas.toDataURL('image/png');

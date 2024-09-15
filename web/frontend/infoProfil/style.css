@@ -51,9 +51,11 @@
 
 .main {
     width: 100vw;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #ede3da;
 }
 
 .changeUsername, .changeEmail, .changePassword, .notification {
@@ -108,7 +110,7 @@ input {
 }
 
 .active {
-    background: #08a4a7;
+    background: #c8aa8f;
 }
 
 .errorMessageP {
@@ -116,4 +118,18 @@ input {
     padding: 5px 15px;
     border: 2px black solid;
     border-radius: 5px;
+}
+
+.footer {
+    background: #c8aa8f;
+    color: black;
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: right;
+}
+
+.footerP a {
+    font-size: 1rem;
+    color: black;
 }

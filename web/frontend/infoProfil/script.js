@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         sessionData = await responseSession.json();
     }
     
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+    };
     
     const formDataNotif = new FormData;
     formDataNotif.append('user_id', sessionData.user_id);
