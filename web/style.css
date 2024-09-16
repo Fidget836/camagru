@@ -124,11 +124,7 @@
     justify-content: space-between;
 }
 
-.likeImg {
-    cursor: pointer;
-}
-
-.commentIconImg {
+.likeImg, .deleteImg, .commentIconImg {
     cursor: pointer;
 }
 
