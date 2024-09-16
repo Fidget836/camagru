@@ -90,3 +90,27 @@
     font-size: 1rem;
     color: black;
 }
+
+@media (min-width: 700px) {
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .labelPassword {
+        font-size: 1.5rem;
+    }
+
+    .iptChangePassword {
+        padding: 10px 15px;
+        margin: 10px 0px;
+    }
+
+    .btnSubmit {
+        padding: 8px 15px;
+        font-size: 1.2rem;
+    }
+
+    .footerP a {
+        font-size: 1.5rem;
+    }
+}
