@@ -8,18 +8,24 @@
 </head>
 <body>
     <div class="header">
-        <h2><a href="/">Camagru - Forgot Password</a></h2>
+        <div class="title">
+            <h2><a href="/">Camagru - Forgot Password</a></h2>
+        </div>
     </div>
 
     <div class="main">
         <div class="changePassword">
-            <label for="Password">Change your Password</label>
-            <input type="text" id="iptUsername" placeholder="Username"/>
-            <input type="text" id="iptEmail" placeholder="Email"/>
+            <label class="labelPassword" for="Password">Give your info</label>
+            <input type="text" class="iptChangePassword" id="iptUsername" placeholder="Username"/>
+            <input type="text" class="iptChangePassword" id="iptEmail" placeholder="Email"/>
+            <span id="errorMessage"></span>
             <button class="btnSubmit" id="btnSubmit">Submit</button>
         </div>
 
-        <span id="errorMessage"></span>
+    </div>
+
+    <div class="footer">
+        <p class="footerP"> <a href="https://github.com/Fidget836" target="_blank">Camagru by tmarie</a></p>
     </div>
 
     <script src="./frontend/forgotPassword/script.js"></script>
