@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
     
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+    };
+
     /***** Form Register*****/
     formRegister.addEventListener('submit', async (event) => {
         event.preventDefault();

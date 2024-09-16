@@ -189,8 +189,8 @@
     color: black;
     width: 100vw;
     box-sizing: border-box;
-    padding: 10px;
-    text-align: right;
+    padding: 10px 0px;
+    text-align: center;
 }
 
 .footerP a {

@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
 }
 
 .header {
@@ -82,6 +83,7 @@
 .pForgotPassword {
     box-sizing: border-box;
     padding: 5px;
+    font-size: 1rem;
 }
 
 .pForgotPassword a {
@@ -111,11 +113,45 @@
     color: black;
     width: 100vw;
     box-sizing: border-box;
-    padding: 10px;
-    text-align: right;
+    padding: 10px 0px;
+    text-align: center;
 }
 
 .footerP a {
     font-size: 1rem;
     color: black;
+}
+
+@media (min-width: 700px) {
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .h2Login, .h2Register {
+        font-size: 2rem;
+    }
+
+    .iptLogin, .iptRegister {
+        padding: 10px 15px;
+        margin: 10px 0px;
+    }
+    
+    .pConstrainedPassword {
+        font-size: 1rem;
+    }
+
+    .pForgotPassword {
+        box-sizing: border-box;
+        padding: 5px;
+        font-size: 1.3rem;
+    }
+
+    .submitLogin, .submitRegister {
+        padding: 8px 15px;
+        font-size: 1.2rem;
+    }
+
+    .footerP a {
+        font-size: 1.5rem;
+    }
 }
