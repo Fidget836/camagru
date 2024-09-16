@@ -431,7 +431,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 feedCount += feed.result.length;
             } catch (error) {
-                console.log("error getPicture in the feed : " + error);
+                const errorPDiv = document.createElement('div');
+                errorPDiv.classList.add("errorPDiv");
+                const errorP = document.createElement('p');
+                errorP.classList.add("errorP");
+                errorP.textContent = "No picture for the moment";
+                errorPDiv.appendChild(errorP);
+                feedMainDiv.appendChild(errorPDiv);
             }
         }
     }

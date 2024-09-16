@@ -7,54 +7,42 @@
     <title>Profil</title>
 </head>
 <body>
-    <div class="profil">
-        <div class="header">
-            <h2> <a href="/">Camagru</a> </h2>
-            <h3>Profil</h3>
+    <div class="header">
+        <div class="title">
+            <h2><a href="/">Camagru - Profil</a></h2>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="loginDiv" id="login">
+            <h2 class="h2Login">Login</h2>
+            <form class="formLogin" id="formLogin">
+                <input type="text" name="usernameLogin" class="iptLogin" id="usernameLogin" placeholder="Username">
+                <input type="password" name="passwordLogin" class="iptLogin" id="passwordLogin" placeholder="Password">
+                <p class="pConstrainedPassword" id="constrainedPassword">[Need [12 - 64] characters, one capital letter, one lowercase letter, one number and one special character]</p>
+                <span id="errorLogin"></span>
+                <p class="pForgotPassword"> <a href="/forgotPassword">Forget Password</a></p>
+                <input type="submit" value="Login" class="submitLogin" id="submitLogin">
+            </form>
         </div>
 
-        <div class="main">
-            <div class="login" id="login">
-                <div class="loginLeft">
-                    <h2>Login</h2>
-                    <form id="formLogin">
-                        <input type="text" name="usernameLogin" id="usernameLogin" placeholder="Username">
-                        <input type="password" name="passwordLogin" id="passwordLogin" placeholder="Password">
-                        <p id="constrainedPassword">[Need [12 - 64] characters, one capital letter, one lowercase letter, one number and one special character]</p>
-                        <p> <a href="/forgotPassword">Forget Password</a></p>
-                        <span id="errorLogin"></span>
-                        <input type="submit" value="Login" id="submitLogin">
-                    </form>
-                </div>
-                <div class="loginRight" id="loginRight">
-                    <h2>Not yet register ?</h2>
-                    <p>Join the social network !</p>
-                    <button id="btnLoginToRegister">Register</button>
-                </div>
-            </div>
 
 
-
-            <div class="register invisible" id="register">
-                <div class="registerLeft" id="registerLeft">
-                    <h2>Already have an account?</h2>
-                    <p>Connect to your account !</p>
-                    <button id="btnRegisterToLogin">Login</button>
-                </div>
-                <div class="registerRight">
-                    <h2>Register</h2>
-                    <form id="formRegister">
-                        <input type="text"  name="usernameRegister" id="usernameRegister" placeholder="Username">
-                        <input type="email" name="emailRegister" id="emailRegister" placeholder="Email">
-                        <input type="password" name="passwordRegister" id="passwordRegister" placeholder="Password">
-                        <input type="password" name="confirmPasswordRegister" id="confirmPasswordRegister" placeholder="Confirm Password">
-                        <p id="constrainedPassword">[Need [12 - 64] characters, one capital letter, one lowercase letter, one number and one special character]</p>
-                        <span id="errorRegister"></span>
-                        <input type="submit" value="Register" id="submitRegister">
-                    </form>
-                </div>
-            </div>
+        <div class="registerDiv" id="register">
+            <h2 class="h2Register">Register</h2>
+            <form class="formRegister" id="formRegister">
+                <input type="text"  name="usernameRegister" class="iptRegister" id="usernameRegister" placeholder="Username">
+                <input type="email" name="emailRegister" class="iptRegister" id="emailRegister" placeholder="Email">
+                <input type="password" name="passwordRegister" class="iptRegister" id="passwordRegister" placeholder="Password">
+                <input type="password" name="confirmPasswordRegister" class="iptRegister" id="confirmPasswordRegister" placeholder="Confirm Password">
+                <p class="pConstrainedPassword" id="constrainedPassword">[Need [12 - 64] characters, one capital letter, one lowercase letter, one number and one special character]</p>
+                <span id="errorRegister"></span>
+                <input type="submit" value="Register" class="submitRegister" id="submitRegister">
+            </form>
         </div>
+    </div>
+    <div class="footer">
+        <p class="footerP"> <a href="https://github.com/Fidget836" target="_blank">Camagru by tmarie</a></p>
     </div>
 
     <script src="./frontend/profil/script.js"></script>

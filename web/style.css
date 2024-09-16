@@ -193,6 +193,19 @@
     margin: 15px 0px;
 }
 
+.errorPDiv {
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 25px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.errorP {
+    font-size: 1rem;
+}
+
 .footer {
     background: #c8aa8f;
     color: black;
