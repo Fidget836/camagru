@@ -57,26 +57,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
         // Size of picture
-        const windowWidth = window.innerWidth;
-        const windowHeight = windowWidth / 1.333;
-        var sizePictureWidth = windowWidth;
-        var sizePictureHeight = windowHeight;
-
-
-        // const windowWidth = window.innerWidth;
-        // const windowHeight = window.innerHeight;
-        // var sizePictureWidth;
-        // var sizePictureHeight;
-        // if (windowWidth < 950) {
-        //     sizePictureWidth = 240;
-        //     sizePictureHeight = 180;
-        // } else if (windowWidth < 1300) {
-        //     sizePictureWidth = 480;
-        //     sizePictureHeight = 360;
-        // } else {
-        //     sizePictureWidth = 640;
-        //     sizePictureHeight = 480;
-        // }
+        var windowWidth
+        var windowHeight
+        if (window.innerWidth < 640) {
+            windowWidth = window.innerWidth;
+            windowHeight = windowWidth / 1.333;
+            var sizePictureWidth = windowWidth;
+            var sizePictureHeight = windowHeight;
+        } else {
+            windowWidth = 640;
+            windowHeight = windowWidth / 1.333;
+            var sizePictureWidth = windowWidth;
+            var sizePictureHeight = windowHeight;
+        }
 
     btnLogout.addEventListener('click', async () => {
         const response = await fetch('https://localhost:8443/backend/views/logout.php');

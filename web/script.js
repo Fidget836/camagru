@@ -36,12 +36,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         var sizePictureHeight = windowHeight;
     }
 
-    // const windowWidth = window.innerWidth;
-    // const windowHeight = windowWidth / 1.333;
-    // var sizePictureWidth = windowWidth;
-    // var sizePictureHeight = windowHeight;
-
-
     // Check login status
     const response = await fetch('https://localhost:8443/backend/views/sessionStatus.php');
     var sessionData = await response.json();

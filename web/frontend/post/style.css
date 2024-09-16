@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    overflow-x: hidden;
 }
 
 .header {
@@ -56,7 +57,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     background: #ede3da;
 }
 
@@ -75,13 +76,10 @@
     padding: 10px 0px;
 }
 
-.picturesDiv {
-    width: 100vw;
+.picturesDiv, .formSticker {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* 2 colonnes de largeur égale */
     gap: 15px; /* Espace entre les images */
-    justify-items: center;
-    align-items: center;
     box-sizing: border-box;
     padding: 10px;
 }
@@ -101,6 +99,7 @@
 
 .videoElement {
     width: 100vw;
+    max-width: 640px;
 }
 
 .canvas {
@@ -164,15 +163,6 @@
     font-size: 1.2rem;
     box-sizing: border-box;
     padding: 10px 0px;
-}
-
-.formSticker {
-    width: 100vw;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 colonnes de taille égale */
-    gap: 20px; /* espace entre les stickers */
-    justify-items: center;
-    align-items: center;
 }
 
 .travel_input, .gamepad_input, .hamburger_input, .panda_input, .trophy_input, .parrot_input {
@@ -254,144 +244,40 @@
     border-radius: 5px;
 }
 
-/* .main {
-    width: 100vw;
-    min-height: 100vh;
-    display: flex;
+@media (min-width: 700px) {
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .btnLogout {
+        padding: 8px 15px;
+        font-size: 1.2rem;
+    }
+
+    .h3Pictures, .h3Webcam, .h3Upload, .h3Stickers {
+        font-size: 1.5rem;
+    }
+    
+    .btnCapture, .btnUploadCapture, .uploadImage::file-selector-button {
+        margin: 10px 0px;
+        padding: 10px 15px;
+    }
+
+
+
+
+    .footerP a {
+        font-size: 1.5rem;
+    }
 }
 
-.pictures {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-right: 2px black solid;
-}
 
-#picturesDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.webcam {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#h3Webcam {
-    margin: 10px;
-}
-
-#videoElement {
-    width: 640px;
-    height: 480px;
-    background: grey;
-}
-
-#canvas, #canvasPrevious {
-    display: none;
-}
-
-.stickers {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-left: 2px black solid;
-}
-
-img {
-padding: 20px 0px;
-}
-
-button {
-    min-width: 100px;
-    height: 40px;
-    padding: 0px 10px;
-    background: none;
-    margin: 20px 0px;
-    border: 2px black solid;
-    border-radius: 5px;
-    color: black;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.validPicture {
-    width: 100vw;
-    height: 115vh;
-    background: #91ffff;
-    color: #08a4a7;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease;
-}
-
-.validPicture.visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-@media (min-width: 950px) and (max-width: 1300px) {
+@media (min-width: 1500px) {
     .main {
-        flex-direction: column;
-        align-items: center;
+        flex-direction: row;
     }
 
-    .pictures {
-        border: none;
-    }
-
-    .stickers {
-        width: 50%;
-        border: none;
-    }
-
-    #videoElement {
-        width: 480px;
-        height: 360px;
-    }
-
-    .validPicture {
-        height: 275vh;
+    .picturesDiv, .formSticker {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
-
-@media (max-width: 950px) {
-    .main {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .pictures {
-        border: none;
-    }
-
-    .stickers {
-        width: 50%;
-        border: none;
-    }
-
-    #videoElement {
-        width: 240px;
-        height: 180px;
-    }
-
-    .validPicture {
-        height: 340vh;
-    }
-} */
