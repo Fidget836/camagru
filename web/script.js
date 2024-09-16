@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 if (sessionData.loggedIn) {
                                     const idElement = commentButton.id.split('_')[1];
                                     const commentValue = document.getElementById(`commentInput_${idElement}`).value;
+                                    
                                     const img = document.getElementById(`imgElement_${idElement}`);
                                     if (commentValue.trim() !== "") {
                                         const formDataComment = new FormData();
@@ -241,7 +242,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             console.error('Erreur de requête:', error);
                                         }
                                     } else {
-                                        console.log("Le champ de commentaire est vide.");
+                                        const iptComment = document.getElementById(`commentInput_${idElement}`);
+                                        
+                                        iptComment.classList.add("errorComment");
+                                        setTimeout(() => {
+                                            iptComment.classList.remove("errorComment");
+                                        }, 1000);
                                     }
                                 }
                             });

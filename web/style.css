@@ -153,6 +153,10 @@
     box-sizing: border-box;
 }
 
+.errorComment {
+    border: 3px solid red;
+}
+
 .commentButton {
     padding: 3px 8px;
     box-sizing: border-box;
