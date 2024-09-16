@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const parrotImg = document.getElementById('parrotImg');
     const trophyImg = document.getElementById('trophyImg');
     const main = document.getElementById('main');
+    const errorMessage = document.getElementById('errorMessage');
     btnUploadCapture.disabled = true;
 
     // Doit être en premier !! Check si la personne est bien login
@@ -48,7 +49,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 video.srcObject = stream;
             })
             .catch(function (err0r) {
-                console.log("Something went wrong!");
             });
     }
 
@@ -256,49 +256,52 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Événement du bouton "Add sticker to uploaded image!"
     btnUploadCapture.addEventListener('click', async () => {
-        let sticker = null;
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                sticker = radios[i].value;
+            let sticker = null;
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    sticker = radios[i].value;
+                }
             }
-        }
+    
+            // Conversion de l'image en data URL (base64)
+            const dataUrl = uploadCanvas.toDataURL('image/png');
+            
+            const formData = new FormData();
+            formData.append('photo', dataUrl);
+            formData.append('sticker', sticker);
+            formData.append('canvaWidth', uploadCanvas.width);
+            formData.append('canvaHeight', uploadCanvas.height);
+            formData.append('id', sessionData.user_id);
+    
+            const response = await fetch("https://localhost:8443/backend/views/photo.php", {
+                method: 'POST',
+                body: formData
+            });
 
-        main.style.display = "none";
-
-        // Conversion de l'image en data URL (base64)
-        const dataUrl = uploadCanvas.toDataURL('image/png');
-
-        const formData = new FormData();
-        formData.append('photo', dataUrl);
-        formData.append('sticker', sticker);
-        formData.append('canvaWidth', uploadCanvas.width);
-        formData.append('canvaHeight', uploadCanvas.height);
-        formData.append('id', sessionData.user_id);
-
-        const response = await fetch("https://localhost:8443/backend/views/photo.php", {
-            method: 'POST',
-            body: formData
-        });
-
-        if (response.ok) {
-            const blob = await response.blob();
-            const imageUrl = URL.createObjectURL(blob);
-
-            // Créer une nouvelle image pour afficher le résultat
-            const resultImage = new Image();
-            resultImage.src = imageUrl;
-
-            // Ajouter l'image au conteneur validPicture
-            pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
-            pictureValidDiv.appendChild(resultImage);
-
-            // Afficher la div validPicture et cacher webcamDiv
-            showValidPicture();
-        } else {
-            console.error('Erreur lors de la génération de l\'image:', response.statusText);
-        }
+            if (response.ok) {
+                const blob = await response.blob();
+                const imageUrl = URL.createObjectURL(blob);
+                main.style.display = "none";
+    
+                // Créer une nouvelle image pour afficher le résultat
+                const resultImage = new Image();
+                resultImage.src = imageUrl;
+    
+                // Ajouter l'image au conteneur validPicture
+                pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
+                pictureValidDiv.appendChild(resultImage);
+    
+                // Afficher la div validPicture et cacher webcamDiv
+                showValidPicture();
+            } else {
+                // Ici tu gères l'erreur sans la logguer dans la console
+                errorMessage.innerHTML = '<p class="errorMessageP">' + response.statusText + '</p>';
+                setTimeout(() => {
+                    errorMessage.innerHTML = '';
+                }, 3000);
+            }
     });
-
+    
     btnAnotherPicture.addEventListener('click', () => {
         window.location.reload();
     });

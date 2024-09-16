@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }
 
 /******** Home ********/
@@ -74,6 +75,7 @@
 
 .feedMainDiv {
     width: 100vw;
+    max-width: 640px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -82,6 +84,7 @@
 
 .pictureFeed {
     width: 100vw;
+    max-width: 640px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -91,6 +94,7 @@
 
 .usernameDiv {
     width: 100vw;
+    max-width: 640px;
     box-sizing: border-box;
     padding: 8px;
 }
@@ -101,6 +105,7 @@
 
 .handleDiv {
     width: 100vw;
+    max-width: 640px;
     padding: 10px;
     box-sizing: border-box;
     display: flex;
@@ -111,6 +116,7 @@
 
 .iconDiv {
     width: 90vw;
+    max-width: 640px;
     padding: 5px 0px;
     box-sizing: border-box;
     display: flex;
@@ -128,6 +134,7 @@
 
 .commentDiv {
     width: 90vw;
+    max-width: 640px;
     padding: 5px 0px;
     box-sizing: border-box;
     display: flex;
@@ -142,6 +149,7 @@
 
 .commentInput {
     width: 90vw;
+    max-width: 640px;
     margin: 8px 0px;
     padding: 3px;
     border: 2px solid black;
@@ -161,12 +169,14 @@
 
 .commentListDiv {
     width: 90vw;
+    max-width: 640px;
     padding: 10px 0px;
     box-sizing: border-box;
 }
 
 .commentP {
     width: 90vw;
+    max-width: 640px;
     padding: 5px 0px;
     box-sizing: border-box;
     word-break: break-word;
@@ -196,6 +206,7 @@
 
 .errorPDiv {
     width: 100vw;
+    max-width: 640px;
     box-sizing: border-box;
     padding: 25px 0px;
     display: flex;
@@ -205,6 +216,14 @@
 
 .errorP {
     font-size: 1rem;
+}
+
+.errorMessageP {
+    background: red;
+    padding: 5px 15px;
+    border: 2px black solid;
+    border-radius: 5px;
+    margin: 10px 0px;
 }
 
 .footer {
@@ -219,4 +238,33 @@
 .footerP a {
     font-size: 1rem;
     color: black;
+}
+
+@media (min-width: 700px) {
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .btnMenu {
+        padding: 8px 15px;
+        font-size: 1.2rem;
+    }
+
+    .usernameP {
+        font-size: 1.5rem;
+    }
+
+    .commentInput {
+
+        padding: 8px;
+    }
+
+    .btnMorePicture, .buttonListDiv, .commentButton {
+        padding: 8px 15px;
+        font-size: 1.2rem;
+    }
+
+    .footerP a {
+        font-size: 1.5rem;
+    }
 }

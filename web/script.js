@@ -22,20 +22,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     
 
     // Size of picture
-    const windowWidth = window.innerWidth;
-    const windowHeight = windowWidth / 1.333;
-    var sizePictureWidth = windowWidth;
-    var sizePictureHeight = windowHeight;
-    // if (windowWidth < 950) {
-    //     sizePictureWidth = 240;
-    //     sizePictureHeight = 180;
-    // } else if (windowWidth < 1300) {
-    //     sizePictureWidth = 480;
-    //     sizePictureHeight = 360;
-    // } else {
-    //     sizePictureWidth = 640;
-    //     sizePictureHeight = 480;
-    // }
+    var windowWidth
+    var windowHeight
+    if (window.innerWidth < 640) {
+        windowWidth = window.innerWidth;
+        windowHeight = windowWidth / 1.333;
+        var sizePictureWidth = windowWidth;
+        var sizePictureHeight = windowHeight;
+    } else {
+        windowWidth = 640;
+        windowHeight = windowWidth / 1.333;
+        var sizePictureWidth = windowWidth;
+        var sizePictureHeight = windowHeight;
+    }
+
+    // const windowWidth = window.innerWidth;
+    // const windowHeight = windowWidth / 1.333;
+    // var sizePictureWidth = windowWidth;
+    // var sizePictureHeight = windowHeight;
 
 
     // Check login status
@@ -431,13 +435,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 feedCount += feed.result.length;
             } catch (error) {
-                const errorPDiv = document.createElement('div');
-                errorPDiv.classList.add("errorPDiv");
-                const errorP = document.createElement('p');
-                errorP.classList.add("errorP");
-                errorP.textContent = "No picture for the moment";
-                errorPDiv.appendChild(errorP);
-                feedMainDiv.appendChild(errorPDiv);
+                errorMessage.innerHTML = '<p class="errorMessageP">Not enough pictures</p>';
+                setTimeout(() => {
+                    errorMessage.innerHTML = '';
+                }, 3000);
             }
         }
     }

@@ -247,6 +247,13 @@
     margin: 10px 0px;
 }
 
+.errorMessageP {
+    background: red;
+    padding: 5px 15px;
+    border: 2px black solid;
+    border-radius: 5px;
+}
+
 /* .main {
     width: 100vw;
     min-height: 100vh;
