@@ -277,6 +277,18 @@
         flex-direction: row;
     }
 
+    .pictures {
+        width: 20vw;
+    }
+
+    .webcam {
+        width: 60vw;
+    }
+
+    .stickers {
+        width: 20vw;
+    }
+
     .picturesDiv, .formSticker {
         grid-template-columns: repeat(1, 1fr);
     }

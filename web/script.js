@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     
 
     // Size of picture
-    var windowWidth
-    var windowHeight
+    var windowWidth;
+    var windowHeight;
     if (window.innerWidth < 640) {
         windowWidth = window.innerWidth;
         windowHeight = windowWidth / 1.333;

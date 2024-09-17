@@ -61,12 +61,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         var windowHeight
         if (window.innerWidth < 640) {
             windowWidth = window.innerWidth;
-            windowHeight = windowWidth / 1.333;
+            windowHeight = windowWidth / 1.3333;
             var sizePictureWidth = windowWidth;
             var sizePictureHeight = windowHeight;
         } else {
             windowWidth = 640;
-            windowHeight = windowWidth / 1.333;
+            windowHeight = windowWidth / 1.3333;
             var sizePictureWidth = windowWidth;
             var sizePictureHeight = windowHeight;
         }
@@ -224,12 +224,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const img = new Image();
                 img.onload = function() {
                     let maxWidth = sizePictureWidth;
-                    let maxHeight = sizePictureWidth;
-                    let ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
-    
-                    let newWidth = img.width * ratio;
-                    let newHeight = img.height * ratio;
-    
+                    let maxHeight = sizePictureHeight;
+                    let ratioWidth = Math.min(maxWidth / img.width);
+                    let ratioHeight = Math.min(maxHeight / img.height);
+                    
+                    let newWidth;
+                    let newHeight;
+                    if (ratioWidth < ratioHeight) {
+                        newWidth = img.width * ratioWidth;
+                        newHeight = img.height * ratioWidth;
+                    } else {
+                        newWidth = img.width * ratioHeight;
+                        newHeight = img.height * ratioHeight;
+                    }
+                    
                     uploadCanvas.width = newWidth;
                     uploadCanvas.height = newHeight;
                     uploadContext.drawImage(img, 0, 0, newWidth, newHeight);
