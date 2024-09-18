@@ -16,6 +16,8 @@ class commentModel {
 
         if ($this->stmt->execute()) { // Fixed: Call execute() on the prepared statement
             http_response_code(200);
+
+
             echo json_encode(['status' => 'success', 'message' => 'Comment has been added']);
         } else {
             http_response_code(500);
@@ -43,17 +45,19 @@ class commentModel {
         $this->stmt->execute();
         $result = $this->stmt->fetch();
         
-
-        $this->stmt = $this->db->conn->prepare("SELECT email FROM users WHERE id = :user_id");
+        
+        $this->stmt = $this->db->conn->prepare("SELECT email, notification FROM users WHERE id = :user_id");
         $this->stmt->bindParam(":user_id", $result['user_id']);
         $this->stmt->execute();
         $result = $this->stmt->fetch();
 
-        $to = $result['email'];
-        $subject = "Camagru - You have a new comment on one of your posts";
-        $message = "Comment : " . $comment;
-        $headers = "From : admin@camagru.com";
-        mail($to, $subject, $message, $headers);
+        if ($result['notification'] === 1) {
+            $to = $result['email'];
+            $subject = "Camagru - You have a new comment on one of your posts";
+            $message = "Comment : " . $comment;
+            $headers = "From : admin@camagru.com";
+            mail($to, $subject, $message, $headers);
+        }
     }
 }
 

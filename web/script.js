@@ -206,6 +206,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             
                                             if (response.ok) {
                                                 const resultStatus = await response.json();
+                                                console.log(resultStatus);
+                                                
                                                 document.getElementById(`commentInput_${idElement}`).value = "";
                                                 
                                                 const commentDivList = document.getElementById(`commentListDiv_${idElement}`);
@@ -221,16 +223,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                                                     commentListDiv.appendChild(commentRead);
                                                 }
                                                 
-                                                if (sessionData.notification === 1) {
-                                                    const formDataCommentMail = new FormData;
-                                                    formDataCommentMail.append('post_id', element.id);
-                                                    formDataCommentMail.append('comment', commentValue);
-                                                    await fetch('https://localhost:8443/backend/views/sendMailNewComment.php', {
-                                                        method: 'POST',
-                                                        body: formDataCommentMail
-                                                    });
-                                                }
-                                                
+                                                const formDataCommentMail = new FormData;
+                                                formDataCommentMail.append('post_id', element.id);
+                                                formDataCommentMail.append('comment', commentValue);
+                                                await fetch('https://localhost:8443/backend/views/sendMailNewComment.php', {
+                                                    method: 'POST',
+                                                    body: formDataCommentMail
+                                                });
                                             } else {
                                                 const errorText = await response.text();
                                                 console.error('Erreur lors de l\'envoi du commentaire:', errorText);
