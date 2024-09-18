@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                                     try {
                                         const result = await response.json();
                                         
-                                        if (result.result[0] === 1) {
+                                        if (result.result[0] >= 1) {
                                             likeImg.src = "frontend/pictures/likeFull.png";
                                             likeImg.classList.add("active");
                                         } else {
