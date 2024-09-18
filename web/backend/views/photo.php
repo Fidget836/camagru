@@ -45,12 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stickerWidth = imagesx($sticker);
         $stickerHeight = imagesy($sticker);
 
+        // changer le ratio du sticker par rapport a l'image
+        $ratio = (128 * imagesx($photo)) / 640;
+        $resizedSticker = imagecreatetruecolor($ratio, $ratio);
+        imagealphablending($resizedSticker, false);
+        imagesavealpha($resizedSticker, true);
+        imagecopyresampled($resizedSticker, $sticker, 0, 0, 0, 0, $ratio, $ratio, imagesx($sticker), imagesy($sticker));
+
         // Définir les coordonnées où le sticker sera placé sur l'image de fond
         $destx = rand(-50, (int)floor($canvaWidth * 0.8));
         $desty = rand(-50, (int)floor($canvaHeight * 0.8));
         
         // Superposer le sticker sur l'image de fond
-        imagecopy($photo, $sticker, $destx, $desty, 0, 0, $stickerWidth, $stickerHeight);
+        imagecopy($photo, $resizedSticker, $destx, $desty, 0, 0, imagesx($resizedSticker), imagesy($resizedSticker));
 
         ob_start();
         imagejpeg($photo, null, 100);
