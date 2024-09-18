@@ -266,6 +266,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             // Conversion de l'image en data URL (base64)
             const dataUrl = uploadCanvas.toDataURL('image/png');
+
+            // Vérification de la taille de l'image avant l'envoi (limite de 10 Mo ici)
+            const imageSizeInBytes = Math.ceil((dataUrl.length - "data:image/png;base64,".length) * 3 / 4); // Taille en octets
+            const maxSizeInBytes = 10 * 1024 * 1024; // 10 MB
+            
+            if (imageSizeInBytes > maxSizeInBytes) {
+                errorMessage.innerHTML = '<p class="errorMessageP">Request Entity Too Large</p>';
+                setTimeout(() => {
+                    errorMessage.innerHTML = '';
+                }, 3000);
+                return;
+            }
             
             const formData = new FormData();
             formData.append('photo', dataUrl);
