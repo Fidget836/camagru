@@ -47,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // changer le ratio du sticker par rapport a l'image
         $ratio = (128 * imagesx($photo)) / 640;
+        $ratio = (int)floor($ratio);
         $resizedSticker = imagecreatetruecolor($ratio, $ratio);
         imagealphablending($resizedSticker, false);
         imagesavealpha($resizedSticker, true);

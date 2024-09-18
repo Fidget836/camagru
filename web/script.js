@@ -443,7 +443,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 feedCount += feed.result.length;
             } catch (error) {
-                btnMorePicture.classList.add("invisibleMoreBtn");
                 errorMessage.innerHTML = '<p class="errorMessageP">Not enough pictures</p>';
                 setTimeout(() => {
                     errorMessage.innerHTML = '';

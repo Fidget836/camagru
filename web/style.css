@@ -207,10 +207,6 @@
     margin: 15px 0px;
 }
 
-.invisibleMoreBtn {
-    opacity: 0;
-}
-
 .errorPDiv {
     width: 100vw;
     max-width: 640px;
