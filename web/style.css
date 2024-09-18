@@ -193,6 +193,9 @@
     font-size: 0.8rem;
 }
 
+.errorMoreBtn {
+    border: 3px solid red;
+}
 
 .btnMorePicture {
     box-sizing: border-box;
@@ -202,6 +205,10 @@
     border-radius: 5px;
     cursor: pointer;
     margin: 15px 0px;
+}
+
+.invisibleMoreBtn {
+    opacity: 0;
 }
 
 .errorPDiv {

@@ -98,10 +98,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             method: 'POST',
             body: formDataFeed
         });
+        
         if (result.ok) {
             try {
                 feed = await result.json();
-                
                 for (let i = 0; i < feed.result.length; i++) {
                     const element = feed.result[i];
                     
@@ -270,31 +270,39 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 commentRead.classList.add("commentP");
                                 commentListDiv.appendChild(commentRead);
                             }
-
-
-                            let buttonListDiv = document.createElement('button');
-                            buttonListDiv.textContent = 'More comment';
-                            buttonListDiv.className = 'buttonListDiv';
-
-                            buttonListDiv.addEventListener('click', async () => {
-                                const commentDivList = document.getElementById(`commentListDiv_${element.id}`);
-                                let nbpicture = commentDivList.childNodes.length + 5;
                                 
-                                let commentsListNew = [];
-                                commentsListNew = await recoverComment(element.id, nbpicture);
-                                
-                                if (commentsListNew.length !== nbpicture - 5) {
-                                    commentDivList.textContent = "";
-                                    for(let i = 0; i < commentsListNew.length; i++) {
-                                        let commentRead = document.createElement('p');
-                                        commentRead.textContent = commentsListNew[i].comment;
-                                        commentRead.classList.add("commentP");
-                                        commentListDiv.appendChild(commentRead);
+                            if (commentsList.length === 5) {
+                                let buttonListDiv = document.createElement('button');
+                                buttonListDiv.textContent = 'More comment';
+                                buttonListDiv.className = 'buttonListDiv';
+    
+                                buttonListDiv.addEventListener('click', async () => {
+                                    const commentDivList = document.getElementById(`commentListDiv_${element.id}`);
+                                    let nbpicture = commentDivList.childNodes.length + 5;
+                                    
+                                    let commentsListNew = [];
+                                    commentsListNew = await recoverComment(element.id, nbpicture);
+                                    
+                                    if (commentsListNew.length !== nbpicture - 5) {
+                                        commentDivList.textContent = "";
+                                        for(let i = 0; i < commentsListNew.length; i++) {
+                                            let commentRead = document.createElement('p');
+                                            commentRead.textContent = commentsListNew[i].comment;
+                                            commentRead.classList.add("commentP");
+                                            commentListDiv.appendChild(commentRead);
+                                        }
+                                    } else {
+                                        console.log("RENTRE ICI");
+                                        
+                                        buttonListDiv.classList.add("errorMoreBtn");
+                                        setTimeout(() => {
+                                            buttonListDiv.classList.remove("errorMoreBtn");
+                                        }, 1000);
                                     }
-                                }
-                            });
-
-                            commentDiv.appendChild(buttonListDiv);
+                                });
+    
+                                commentDiv.appendChild(buttonListDiv);
+                            }
 
 
                             // Like Div
@@ -435,6 +443,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 feedCount += feed.result.length;
             } catch (error) {
+                btnMorePicture.classList.add("invisibleMoreBtn");
                 errorMessage.innerHTML = '<p class="errorMessageP">Not enough pictures</p>';
                 setTimeout(() => {
                     errorMessage.innerHTML = '';
