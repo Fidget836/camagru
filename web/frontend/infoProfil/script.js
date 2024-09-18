@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 3000);
             }
         } catch (error) {
-            console.log(error);
         }
     });
 
@@ -99,7 +98,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 3000);
             }
         } catch (error) {
-            console.log(error);
         }
     });
 
@@ -125,7 +123,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 3000);
             }
         } catch (error) {
-            console.log(error);
         }
     });
 
@@ -149,7 +146,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 3000);
             }
         } catch (error) {
-            console.log(error);
         }
 
     });
@@ -175,7 +171,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }, 3000);
             }
         } catch (error) {
-            console.log(error);
         }
 
     });

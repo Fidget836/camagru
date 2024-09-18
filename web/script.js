@@ -80,11 +80,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 return resultComments.result;
             } catch (error) {
-                console.log(error);
             }
 
         } else {
-            console.log("Error in the fetch getComment");
         }
     };
 
@@ -156,7 +154,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                 usernameP.textContent = "Posted by " + resultUsername.message; // 'textContent' for secure against the inject html or js
                                 usernameDiv.appendChild(usernameP);
                             } catch (error) {
-                                console.log(error);
                             }
                             pictureFeedDiv.appendChild(usernameDiv);
 
@@ -292,8 +289,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             commentListDiv.appendChild(commentRead);
                                         }
                                     } else {
-                                        console.log("RENTRE ICI");
-                                        
                                         buttonListDiv.classList.add("errorMoreBtn");
                                         setTimeout(() => {
                                             buttonListDiv.classList.remove("errorMoreBtn");
@@ -331,10 +326,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             likeImg.src = "frontend/pictures/likeEmpty.png";
                                         }
                                     } catch (error) {
-                                        console.log(error);
                                     }
                                 } else {
-                                    console.log("Error in getLike");
                                 }
                             }
                             
@@ -351,17 +344,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             body: formDataLike,
                                             method: 'POST'
                                         });
-                                        
-                                        if (response.ok) {
-                                            try {
-                                                const message = await response.json();
-                                                likeImg.src = "frontend/pictures/likeFull.png";
-                                                likeImg.classList.add("active");
-                                            } catch (error) {
-                                                console.log(error);
-                                            }
-                                        } else {
-                                            console.log("Error to put the like");
+                                        try {
+                                            const message = await response.json();
+                                            likeImg.src = "frontend/pictures/likeFull.png";
+                                            likeImg.classList.add("active");
+                                        } catch (error) {
                                         }
                                     } else {
                                         const formDataDeleteLike = new FormData;
@@ -372,17 +359,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             body: formDataDeleteLike,
                                             method: 'POST'
                                         });
-                                        
-                                        if (response.ok) {
-                                            try {
-                                                const result = await response.json();
-                                                likeImg.src = "frontend/pictures/likeEmpty.png";
-                                                likeImg.classList.remove("active");
-                                            } catch (error) {
-                                                console.log(error);
-                                            }
-                                        } else {
-                                            console.log("Error in delete like");
+                                        try {
+                                            const result = await response.json();
+                                            likeImg.src = "frontend/pictures/likeEmpty.png";
+                                            likeImg.classList.remove("active");
+                                        } catch (error) {
                                         }
                                     }
                                 }
@@ -421,7 +402,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                         const result = await response.json();
                                         window.location.reload();
                                     } catch (error) {
-                                        console.log(error);
                                     }
                                 });
                                 iconDiv.appendChild(deleteImg);

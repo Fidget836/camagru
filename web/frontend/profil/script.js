@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const data = await response.json();
         
-        console.log(data);
         if (data.status === 'error') {
             errorLogin.innerHTML = '<p class="errorStyle">' + data.message + '</p>';
             setTimeout(() => {

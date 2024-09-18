@@ -110,53 +110,48 @@ document.addEventListener('DOMContentLoaded', async () => {
         img.classList.add("activeSticker");
     });
 
-    // Afficher les images précédentes
-    if (listPreviousPicturesResponse.ok) {
-        listPreviousPictures = await listPreviousPicturesResponse.json();
+    listPreviousPictures = await listPreviousPicturesResponse.json();
+    
+    // Effacer les anciennes images si nécessaire
+    pictureDiv.innerHTML = ''; 
+
+    for (let i = 0; i < 6; i++) {
+        if (listPreviousPictures.result[i] === undefined) break;
+        const element = listPreviousPictures.result[i];
         
-        // Effacer les anciennes images si nécessaire
-        pictureDiv.innerHTML = ''; 
+        await new Promise((resolve) => {
+            const img = new Image();
+            img.src = 'data:image/jpeg;base64,' + element;
 
-        for (let i = 0; i < 6; i++) {
-            if (listPreviousPictures.result[i] === undefined) break;
-            const element = listPreviousPictures.result[i];
-            
-            await new Promise((resolve) => {
-                const img = new Image();
-                img.src = 'data:image/jpeg;base64,' + element;
+            img.onload = () => {
+                const canvasThumbnail = document.createElement('canvas');
+                const contextThumbnail = canvasThumbnail.getContext('2d');
 
-                img.onload = () => {
-                    const canvasThumbnail = document.createElement('canvas');
-                    const contextThumbnail = canvasThumbnail.getContext('2d');
-
-                    const thumbnailWidth = sizePictureWidth / 2.5;
-                    const thumbnailHeight = sizePictureHeight / 2.5;
-                    let width = img.width;
-                    let height = img.height;
-                    if (width > height) {
-                        height = Math.round(height * (thumbnailWidth / width));
-                        width = thumbnailWidth;
-                    } else {
-                        width = Math.round(width * (thumbnailHeight / height));
-                        height = thumbnailHeight;
-                    }
-                    canvasThumbnail.width = width;
-                    canvasThumbnail.height = height;
-
-                    contextThumbnail.drawImage(img, 0, 0, width, height);
-
-                    const thumbnailDataUrl = canvasThumbnail.toDataURL('image/jpeg');
-                    const thumbnailImg = new Image();
-                    thumbnailImg.src = thumbnailDataUrl;
-                    
-                    pictureDiv.appendChild(thumbnailImg);
-                    resolve();
+                const thumbnailWidth = sizePictureWidth / 2.5;
+                const thumbnailHeight = sizePictureHeight / 2.5;
+                let width = img.width;
+                let height = img.height;
+                if (width > height) {
+                    height = Math.round(height * (thumbnailWidth / width));
+                    width = thumbnailWidth;
+                } else {
+                    width = Math.round(width * (thumbnailHeight / height));
+                    height = thumbnailHeight;
                 }
-            });
-        };
-    } else {
-        console.log("Error to recover the previous pictures !");
-    }
+                canvasThumbnail.width = width;
+                canvasThumbnail.height = height;
+
+                contextThumbnail.drawImage(img, 0, 0, width, height);
+
+                const thumbnailDataUrl = canvasThumbnail.toDataURL('image/jpeg');
+                const thumbnailImg = new Image();
+                thumbnailImg.src = thumbnailDataUrl;
+                
+                pictureDiv.appendChild(thumbnailImg);
+                resolve();
+            }
+        });
+    };
 
     // Fonction pour afficher la div validPicture
     function showValidPicture() {
