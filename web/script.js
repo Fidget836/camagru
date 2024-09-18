@@ -206,7 +206,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                                             
                                             if (response.ok) {
                                                 const resultStatus = await response.json();
-                                                console.log(resultStatus);
                                                 
                                                 document.getElementById(`commentInput_${idElement}`).value = "";
                                                 
