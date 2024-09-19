@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const trophyImg = document.getElementById('trophyImg');
     const main = document.getElementById('main');
     const errorMessage = document.getElementById('errorMessage');
+    var invisibleCanvas;
     btnUploadCapture.disabled = true;
 
     // Doit être en premier !! Check si la personne est bien login
@@ -167,51 +168,114 @@ document.addEventListener('DOMContentLoaded', async () => {
                 sticker = radios[i].value;
             }
         }
-
+        
         main.style.display = "none";
-
-        canvas.width = sizePictureWidth;
-        canvas.height = sizePictureHeight;
+    
+        // Affichage de l'image sur le canvas visible avec la taille actuelle de la vidéo
+        canvas.width = 640;
+        canvas.height = 480;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // Conversion de l'image en data URL (base64)
-        const dataUrl = canvas.toDataURL('image/png');
-
+    
+        // Créer un canvas invisible pour redimensionner l'image
+        const resizeCanvas = document.createElement('canvas');
+        const resizeContext = resizeCanvas.getContext('2d');
+    
+        // Définir les dimensions maximales (640x480)
+        const maxWidth = 640;
+        const maxHeight = 480;
+    
+        let ratioWidth = Math.min(maxWidth / video.videoWidth);
+        let ratioHeight = Math.min(maxHeight / video.videoHeight);
+        
+        let newWidth, newHeight;
+        if (ratioWidth < ratioHeight) {
+            newWidth = video.videoWidth * ratioWidth;
+            newHeight = video.videoHeight * ratioWidth;
+        } else {
+            newWidth = video.videoWidth * ratioHeight;
+            newHeight = video.videoHeight * ratioHeight;
+        }
+    
+        // Configurer la taille du canvas invisible avec les nouvelles dimensions
+        resizeCanvas.width = newWidth;
+        resizeCanvas.height = newHeight;
+    
+        // Dessiner l'image redimensionnée sur le canvas invisible
+        resizeContext.drawImage(video, 0, 0, newWidth, newHeight);
+    
+        // Conversion de l'image redimensionnée en data URL (base64)
+        const dataUrl = resizeCanvas.toDataURL('image/png');
+    
         const formData = new FormData();
         formData.append('photo', dataUrl);
         formData.append('sticker', sticker);
-        formData.append('canvaWidth', canvas.width);
-        formData.append('canvaHeight', canvas.height);
+        formData.append('canvaWidth', newWidth);
+        formData.append('canvaHeight', newHeight);
         formData.append('id', sessionData.user_id);
-        
-
+    
         const response = await fetch("https://localhost:8443/backend/views/photo.php", {
             method: 'POST',
             body: formData
         });
-
+    
         if (response.ok) {
             const blob = await response.blob();
             const imageUrl = URL.createObjectURL(blob);
-
-            // Créer une nouvelle image pour afficher le résultat
-            const resultImage = new Image();
-            resultImage.src = imageUrl;
-
-            // Ajouter l'image au conteneur validPicture
-            pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
-            pictureValidDiv.appendChild(resultImage);
-
-            // Afficher la div validPicture et cacher webcamDiv
-            showValidPicture();
+            main.style.display = "none";
+            
+            // Créer une nouvelle image pour redimensionner et afficher le résultat
+            const img = new Image();
+            img.src = imageUrl;
+            
+            img.onload = function() {
+                // Définir les dimensions maximales pour le redimensionnement
+                const maxWidth = sizePictureWidth; // ou toute autre valeur souhaitée
+                const maxHeight = sizePictureHeight; // ou toute autre valeur souhaitée
+            
+                let ratioWidth = Math.min(maxWidth / img.width);
+                let ratioHeight = Math.min(maxHeight / img.height);
+                
+                let newWidth, newHeight;
+                if (ratioWidth < ratioHeight) {
+                    newWidth = img.width * ratioWidth;
+                    newHeight = img.height * ratioWidth;
+                } else {
+                    newWidth = img.width * ratioHeight;
+                    newHeight = img.height * ratioHeight;
+                }
+            
+                // Créer un canvas invisible pour redimensionner l'image
+                const resizeCanvas = document.createElement('canvas');
+                const resizeContext = resizeCanvas.getContext('2d');
+                
+                // Configurer la taille du canvas
+                resizeCanvas.width = newWidth;
+                resizeCanvas.height = newHeight;
+            
+                // Dessiner l'image redimensionnée sur le canvas
+                resizeContext.drawImage(img, 0, 0, newWidth, newHeight);
+            
+                // Créer une nouvelle image pour afficher le résultat redimensionné
+                const resultImage = new Image();
+                resultImage.src = resizeCanvas.toDataURL('image/jpeg'); // Ou 'image/png'
+            
+                // Ajouter l'image redimensionnée au conteneur validPicture
+                pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
+                pictureValidDiv.appendChild(resultImage);
+            
+                // Afficher la div validPicture et cacher webcamDiv
+                showValidPicture();
+            };
+    
         } else {
             console.error('Erreur lors de la génération de l\'image:', response.statusText);
         }
     });
+    
 
     uploadImageInput.addEventListener('change', () => {
         const file = uploadImageInput.files[0];
-    
+        
         // Vérifier que le fichier est bien une image
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
@@ -232,7 +296,31 @@ document.addEventListener('DOMContentLoaded', async () => {
                         newWidth = img.width * ratioHeight;
                         newHeight = img.height * ratioHeight;
                     }
+
+                    let maxWidthInvisible = 640;
+                    let maxHeightInvisible = 480;
+                    let ratioWidthInvisible = Math.min(maxWidthInvisible / img.width);
+                    let ratioHeightInvisible = Math.min(maxHeightInvisible / img.height);
                     
+                    let newWidthInvisible;
+                    let newHeightInvisible;
+                    if (ratioWidthInvisible < ratioHeightInvisible) {
+                        newWidthInvisible = img.width * ratioWidthInvisible;
+                        newHeightInvisible = img.height * ratioWidthInvisible;
+                    } else {
+                        newWidthInvisible = img.width * ratioHeightInvisible;
+                        newHeightInvisible = img.height * ratioHeightInvisible;
+                    }
+    
+                    invisibleCanvas = document.createElement('canvas');
+                    invisibleContext = invisibleCanvas.getContext('2d');
+                    invisibleCanvas.width = newWidthInvisible;
+                    invisibleCanvas.height = newHeightInvisible;
+
+                    invisibleContext.drawImage(img, 0, 0, newWidthInvisible, newHeightInvisible);
+                    // resizedImageBase64 = invisibleCanvas.toDataURL('image/png');
+    
+                    // Dessiner l'image sur le canvas visible pour que l'utilisateur la voie
                     uploadCanvas.width = newWidth;
                     uploadCanvas.height = newHeight;
                     uploadContext.drawImage(img, 0, 0, newWidth, newHeight);
@@ -250,6 +338,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+
     // Événement du bouton "Add sticker to uploaded image!"
     btnUploadCapture.addEventListener('click', async () => {
             let sticker = null;
@@ -260,7 +349,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
     
             // Conversion de l'image en data URL (base64)
-            const dataUrl = uploadCanvas.toDataURL('image/png');
+            const dataUrl = invisibleCanvas.toDataURL('image/png');
 
             // Vérification de la taille de l'image avant l'envoi (limite de 10 Mo ici)
             const imageSizeInBytes = Math.ceil((dataUrl.length - "data:image/png;base64,".length) * 3 / 4); // Taille en octets
@@ -277,8 +366,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const formData = new FormData();
             formData.append('photo', dataUrl);
             formData.append('sticker', sticker);
-            formData.append('canvaWidth', uploadCanvas.width);
-            formData.append('canvaHeight', uploadCanvas.height);
+            formData.append('canvaWidth', invisibleCanvas.width);
+            formData.append('canvaHeight', invisibleCanvas.height);
             formData.append('id', sessionData.user_id);
     
             const response = await fetch("https://localhost:8443/backend/views/photo.php", {
@@ -290,17 +379,50 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const blob = await response.blob();
                 const imageUrl = URL.createObjectURL(blob);
                 main.style.display = "none";
-    
-                // Créer une nouvelle image pour afficher le résultat
-                const resultImage = new Image();
-                resultImage.src = imageUrl;
-    
-                // Ajouter l'image au conteneur validPicture
-                pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
-                pictureValidDiv.appendChild(resultImage);
-    
-                // Afficher la div validPicture et cacher webcamDiv
-                showValidPicture();
+                
+                // Créer une nouvelle image pour redimensionner et afficher le résultat
+                const img = new Image();
+                img.src = imageUrl;
+                
+                img.onload = function() {
+                    // Définir les dimensions maximum pour le redimensionnement
+                    const maxWidth = sizePictureWidth; // ou toute autre valeur souhaitée
+                    const maxHeight = sizePictureHeight; // ou toute autre valeur souhaitée
+                
+                    let ratioWidth = Math.min(maxWidth / img.width);
+                    let ratioHeight = Math.min(maxHeight / img.height);
+                    
+                    let newWidth, newHeight;
+                    if (ratioWidth < ratioHeight) {
+                        newWidth = img.width * ratioWidth;
+                        newHeight = img.height * ratioWidth;
+                    } else {
+                        newWidth = img.width * ratioHeight;
+                        newHeight = img.height * ratioHeight;
+                    }
+                
+                    // Créer un canvas invisible pour redimensionner l'image
+                    const resizeCanvas = document.createElement('canvas');
+                    const resizeContext = resizeCanvas.getContext('2d');
+                    
+                    // Configurer la taille du canvas
+                    resizeCanvas.width = newWidth;
+                    resizeCanvas.height = newHeight;
+                
+                    // Dessiner l'image redimensionnée sur le canvas
+                    resizeContext.drawImage(img, 0, 0, newWidth, newHeight);
+                
+                    // Créer une nouvelle image pour afficher le résultat redimensionné
+                    const resultImage = new Image();
+                    resultImage.src = resizeCanvas.toDataURL('image/jpeg'); // Ou 'image/png'
+                
+                    // Ajouter l'image redimensionnée au conteneur validPicture
+                    pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
+                    pictureValidDiv.appendChild(resultImage);
+                
+                    // Afficher la div validPicture et cacher webcamDiv
+                    showValidPicture();
+                };
             } else {
                 // Ici tu gères l'erreur sans la logguer dans la console
                 errorMessage.innerHTML = '<p class="errorMessageP">' + response.statusText + '</p>';

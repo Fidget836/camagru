@@ -19,7 +19,6 @@ class mailModel {
             $this->stmt->bindParam(":id", $user['id']);
             $this->stmt->execute();
         } else {
-            error_log("ERROR IN USER mailModel");
         }
     }
 
