@@ -7,6 +7,13 @@ The final image will be visible to all on the main feed, with a like and comment
 To launch the project, simply :
 - git clone git@github.com:Fidget836/camagru.git
 - cd camagru
+- touch .env
+- Copy/Paste this in the .env :
+  
+`MYSQL_ROOT_PASSWORD=my-secret-pw
+MYSQL_DATABASE=camagru_db
+MYSQL_USER=camagru_user
+MYSQL_PASSWORD=user-secret-pw`
 - make
 
 Now the project is launched, you can access camagru on :
