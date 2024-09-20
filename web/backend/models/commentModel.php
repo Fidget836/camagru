@@ -14,7 +14,7 @@ class commentModel {
         $this->stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $this->stmt->bindParam(':comment', $comment, PDO::PARAM_STR);
 
-        if ($this->stmt->execute()) { // Fixed: Call execute() on the prepared statement
+        if ($this->stmt->execute()) {
             http_response_code(200);
 
 

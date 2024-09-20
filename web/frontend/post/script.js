@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     var invisibleCanvas;
     btnUploadCapture.disabled = true;
 
-    // Doit être en premier !! Check si la personne est bien login
     if (!sessionData.loggedIn) {
         window.location.href = '/';
         return ;
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.scrollTo(0, 0);
     };
 
-        // Size of picture
         var windowWidth
         var windowHeight
         if (window.innerWidth < 640) {
@@ -80,7 +78,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Fonction pour charger les images précédentes
     const formDataList = new FormData();
     formDataList.append('id', sessionData.user_id);
     formDataList.append('nbPicture', 6);
@@ -113,7 +110,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     listPreviousPictures = await listPreviousPicturesResponse.json();
     
-    // Effacer les anciennes images si nécessaire
     pictureDiv.innerHTML = ''; 
 
     for (let i = 0; i < 6; i++) {
@@ -154,13 +150,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     };
 
-    // Fonction pour afficher la div validPicture
     function showValidPicture() {
         const validPictureDiv = document.querySelector('.validPicture');
         validPictureDiv.classList.add('visible');
     }
 
-    // Événement du bouton "Take the picture"
     captureButton.addEventListener('click', async () => {
         let sticker = null;
         for (let i = 0; i < radios.length; i++) {
@@ -171,16 +165,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         main.style.display = "none";
     
-        // Affichage de l'image sur le canvas visible avec la taille actuelle de la vidéo
         canvas.width = 640;
         canvas.height = 480;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
     
-        // Créer un canvas invisible pour redimensionner l'image
         const resizeCanvas = document.createElement('canvas');
         const resizeContext = resizeCanvas.getContext('2d');
     
-        // Définir les dimensions maximales (640x480)
         const maxWidth = 640;
         const maxHeight = 480;
     
@@ -196,14 +187,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             newHeight = video.videoHeight * ratioHeight;
         }
     
-        // Configurer la taille du canvas invisible avec les nouvelles dimensions
         resizeCanvas.width = newWidth;
         resizeCanvas.height = newHeight;
     
-        // Dessiner l'image redimensionnée sur le canvas invisible
         resizeContext.drawImage(video, 0, 0, newWidth, newHeight);
     
-        // Conversion de l'image redimensionnée en data URL (base64)
         const dataUrl = resizeCanvas.toDataURL('image/png');
     
         const formData = new FormData();
@@ -223,14 +211,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             const imageUrl = URL.createObjectURL(blob);
             main.style.display = "none";
             
-            // Créer une nouvelle image pour redimensionner et afficher le résultat
             const img = new Image();
             img.src = imageUrl;
             
             img.onload = function() {
-                // Définir les dimensions maximales pour le redimensionnement
-                const maxWidth = sizePictureWidth; // ou toute autre valeur souhaitée
-                const maxHeight = sizePictureHeight; // ou toute autre valeur souhaitée
+                const maxWidth = sizePictureWidth;
+                const maxHeight = sizePictureHeight;
             
                 let ratioWidth = Math.min(maxWidth / img.width);
                 let ratioHeight = Math.min(maxHeight / img.height);
@@ -244,26 +230,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                     newHeight = img.height * ratioHeight;
                 }
             
-                // Créer un canvas invisible pour redimensionner l'image
                 const resizeCanvas = document.createElement('canvas');
                 const resizeContext = resizeCanvas.getContext('2d');
                 
-                // Configurer la taille du canvas
                 resizeCanvas.width = newWidth;
                 resizeCanvas.height = newHeight;
             
-                // Dessiner l'image redimensionnée sur le canvas
                 resizeContext.drawImage(img, 0, 0, newWidth, newHeight);
             
-                // Créer une nouvelle image pour afficher le résultat redimensionné
                 const resultImage = new Image();
-                resultImage.src = resizeCanvas.toDataURL('image/jpeg'); // Ou 'image/png'
+                resultImage.src = resizeCanvas.toDataURL('image/png');
             
-                // Ajouter l'image redimensionnée au conteneur validPicture
-                pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
+                pictureValidDiv.innerHTML = '';
                 pictureValidDiv.appendChild(resultImage);
             
-                // Afficher la div validPicture et cacher webcamDiv
                 showValidPicture();
             };
     
@@ -276,7 +256,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     uploadImageInput.addEventListener('change', () => {
         const file = uploadImageInput.files[0];
         
-        // Vérifier que le fichier est bien une image
         if (file && file.type.startsWith('image/')) {
             const reader = new FileReader();
             reader.onload = function(event) {
@@ -318,14 +297,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     invisibleCanvas.height = newHeightInvisible;
 
                     invisibleContext.drawImage(img, 0, 0, newWidthInvisible, newHeightInvisible);
-                    // resizedImageBase64 = invisibleCanvas.toDataURL('image/png');
     
-                    // Dessiner l'image sur le canvas visible pour que l'utilisateur la voie
                     uploadCanvas.width = newWidth;
                     uploadCanvas.height = newHeight;
                     uploadContext.drawImage(img, 0, 0, newWidth, newHeight);
     
-                    // Activer le bouton après l'upload
                     btnUploadCapture.disabled = false;
                 };
                 img.src = event.target.result;
@@ -333,13 +309,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             reader.readAsDataURL(file);
         } else {
             alert('Please upload a valid image file (jpg, png, gif, etc.)');
-            uploadImageInput.value = '';  // Réinitialise l'input file
-            btnUploadCapture.disabled = true;  // Désactive le bouton si ce n'est pas une image
+            uploadImageInput.value = '';
+            btnUploadCapture.disabled = true;
         }
     });
 
 
-    // Événement du bouton "Add sticker to uploaded image!"
     btnUploadCapture.addEventListener('click', async () => {
             let sticker = null;
             for (let i = 0; i < radios.length; i++) {
@@ -348,11 +323,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
     
-            // Conversion de l'image en data URL (base64)
             const dataUrl = invisibleCanvas.toDataURL('image/png');
 
-            // Vérification de la taille de l'image avant l'envoi (limite de 10 Mo ici)
-            const imageSizeInBytes = Math.ceil((dataUrl.length - "data:image/png;base64,".length) * 3 / 4); // Taille en octets
+            // Vérification de la taille de l'image avant l'envoi
+            const imageSizeInBytes = Math.ceil((dataUrl.length - "data:image/png;base64,".length) * 3 / 4);
             const maxSizeInBytes = 10 * 1024 * 1024; // 10 MB
             
             if (imageSizeInBytes > maxSizeInBytes) {
@@ -380,14 +354,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const imageUrl = URL.createObjectURL(blob);
                 main.style.display = "none";
                 
-                // Créer une nouvelle image pour redimensionner et afficher le résultat
                 const img = new Image();
                 img.src = imageUrl;
                 
                 img.onload = function() {
-                    // Définir les dimensions maximum pour le redimensionnement
-                    const maxWidth = sizePictureWidth; // ou toute autre valeur souhaitée
-                    const maxHeight = sizePictureHeight; // ou toute autre valeur souhaitée
+                    const maxWidth = sizePictureWidth;
+                    const maxHeight = sizePictureHeight;
                 
                     let ratioWidth = Math.min(maxWidth / img.width);
                     let ratioHeight = Math.min(maxHeight / img.height);
@@ -401,30 +373,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                         newHeight = img.height * ratioHeight;
                     }
                 
-                    // Créer un canvas invisible pour redimensionner l'image
                     const resizeCanvas = document.createElement('canvas');
                     const resizeContext = resizeCanvas.getContext('2d');
                     
-                    // Configurer la taille du canvas
                     resizeCanvas.width = newWidth;
                     resizeCanvas.height = newHeight;
                 
-                    // Dessiner l'image redimensionnée sur le canvas
                     resizeContext.drawImage(img, 0, 0, newWidth, newHeight);
                 
-                    // Créer une nouvelle image pour afficher le résultat redimensionné
                     const resultImage = new Image();
-                    resultImage.src = resizeCanvas.toDataURL('image/jpeg'); // Ou 'image/png'
+                    resultImage.src = resizeCanvas.toDataURL('image/png');
                 
-                    // Ajouter l'image redimensionnée au conteneur validPicture
-                    pictureValidDiv.innerHTML = ''; // Effacer l'image précédente si nécessaire
+                    pictureValidDiv.innerHTML = '';
                     pictureValidDiv.appendChild(resultImage);
                 
-                    // Afficher la div validPicture et cacher webcamDiv
                     showValidPicture();
                 };
             } else {
-                // Ici tu gères l'erreur sans la logguer dans la console
                 errorMessage.innerHTML = '<p class="errorMessageP">' + response.statusText + '</p>';
                 setTimeout(() => {
                     errorMessage.innerHTML = '';

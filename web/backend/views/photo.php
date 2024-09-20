@@ -29,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Charger l'image du sticker à partir de l'URL
         $sticker = imagecreatefrompng("../../frontend/post/stickers/" . $stickerFilename);
         if (!$sticker) {
             http_response_code(400);
@@ -37,11 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        // Activer le mélange d'alpha pour préserver la transparence
         imagealphablending($photo, true);
         imagesavealpha($photo, true);
 
-        // Obtenir la largeur et la hauteur du sticker
         $stickerWidth = imagesx($sticker);
         $stickerHeight = imagesy($sticker);
 
@@ -49,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $destx = rand(-50, (int)floor($canvaWidth * 0.8));
         $desty = rand(-50, (int)floor($canvaHeight * 0.8));
         
-        // Superposer le sticker sur l'image de fond
         imagecopy($photo, $sticker, $destx, $desty, 0, 0, $stickerWidth, $stickerHeight);
 
         ob_start();
@@ -57,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imageData = ob_get_contents();
         ob_end_clean();
 
-        // Libérer la mémoire
         imagedestroy($photo);
         imagedestroy($sticker);
 

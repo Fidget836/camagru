@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS posts (
     id INT UNSIGNED NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
     user_id INT UNSIGNED NOT NULL,
-    photoData MEDIUMBLOB, -- Remplacez photo_url VARCHAR(255) par photoData LONGBLOB pour stocker des images binaires
+    photoData MEDIUMBLOB,
     `like` BOOLEAN DEFAULT FALSE,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

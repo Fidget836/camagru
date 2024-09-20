@@ -20,8 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = "/post";
     });
     
-
-    // Size of picture
     var windowWidth;
     var windowHeight;
     if (window.innerWidth < 640) {
@@ -36,7 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         var sizePictureHeight = windowHeight;
     }
 
-    // Check login status
     const response = await fetch('https://localhost:8443/backend/views/sessionStatus.php');
     var sessionData = await response.json();
 
@@ -163,11 +160,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                             imgElement.src = thumbnailImg.src;
                             pictureFeedDiv.appendChild(imgElement);
 
-                            // Div Comment + Like
                             let handleDiv = document.createElement('div');
                             handleDiv.className = "handleDiv";
 
-                            // Comment Div
                             let commentDiv = document.createElement('div');
                             commentDiv.className = "commentDiv";
                             commentDiv.classList.add("invisible");
@@ -298,7 +293,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                             }
 
 
-                            // Like Div
                             let iconDiv = document.createElement('div');
                             iconDiv.className = "iconDiv";
                             let likeImg = document.createElement("img");
@@ -436,7 +430,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const response = await fetch('https://localhost:8443/backend/views/logout.php');
         const data = await response.json();
         if (data.status === 'success') {
-            window.location.reload(); // Refresh the page to reflect the changes
+            window.location.reload();
         }
     });
 

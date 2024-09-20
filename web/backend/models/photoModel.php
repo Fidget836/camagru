@@ -12,17 +12,15 @@ class photoModel {
 
     public function stockPhoto($id) {
         try {
-            // Préparer la requête SQL pour insérer l'image sous forme de BLOB
-            $userId = $id; // Remplacez par l'ID de l'utilisateur connecté
+            $userId = $id;
 
             $this->stmt = $this->db->conn->prepare("INSERT INTO posts (user_id, photoData) VALUES (?, ?)");
             $this->stmt->bindParam(1, $userId, PDO::PARAM_INT);
             $this->stmt->bindParam(2, $this->imageData, PDO::PARAM_LOB);
 
             if ($this->stmt->execute()) {
-                // Stockage réussi, renvoyer l'image au client
                 header('Content-Type: image/jpeg');
-                echo $this->imageData; // Envoyer l'image au client
+                echo $this->imageData;
                 http_response_code(200);
             } else {
                 http_response_code(500);
@@ -64,9 +62,9 @@ class photoModel {
         $picturesBase64 = [];
         foreach ($pictures as $picture) {
             $picturesBase64[] = [
-                'id' => $picture['id'], // Inclure l'ID
-                'user_id' => $picture['user_id'], // Inclure l'ID
-                'photoData' => base64_encode($picture['photoData']) // Encoder la photo en base64
+                'id' => $picture['id'],
+                'user_id' => $picture['user_id'],
+                'photoData' => base64_encode($picture['photoData'])
             ];
         }
 

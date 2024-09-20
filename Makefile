@@ -12,10 +12,10 @@ clean :
 fclean :
 	docker compose down
 	docker rmi $$(docker images -q)
-	docker volume rm camagru_db_data
+	docker volume rm $$(docker volume ls -q)
 
 cleanVolume:
-	docker volume rm camagru_db_data
+	docker volume rm $$(docker volume ls -q)
 
 re : fclean all
 
