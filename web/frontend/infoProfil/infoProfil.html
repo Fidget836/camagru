@@ -19,26 +19,29 @@
 
     <div class="main">
         <div class="changeUsername">
-            <label class="labelChange" for="username">Change your Username</label>
+            <p class="labelChange" for="username">Change your Username</p>
             <input type="text" id="iptUsername" placeholder="New Username"/>
             <button class="btnSubmit" id="btnUsername">Submit</button>
         </div>
 
         <div class="changeEmail">
-            <label class="labelChange" for="Email">Change your Email</label>
+            <p class="labelChange" for="Email">Change your Email</p>
             <input type="email" id="iptEmail" placeholder="New Email"/>
             <button class="btnSubmit" id="btnEmail">Submit</button>
         </div>
 
         <div class="changePassword">
-            <label class="labelChange" for="Password">Change your Password</label>
-            <input type="password" id="iptPassword" placeholder="New Password"/>
-            <input type="password" id="iptConfirmPassword" placeholder="Confirm New Password"/>
-            <button class="btnSubmit" id="btnPassword">Submit</button>
+            <form class="changePassword">
+                <p class="labelChange" for="Password">Change your Password</p>
+                <input type="text" name="username-hidden" autocomplete="username" style="visibility: hidden; position: absolute; left: -9999px;">
+                <input type="password" id="iptPassword" placeholder="New Password" autocomplete="new-password"/>
+                <input type="password" id="iptConfirmPassword" placeholder="Confirm New Password" autocomplete="new-password"/>
+                <button class="btnSubmit" id="btnPassword">Submit</button>
+            </form>
         </div>
 
         <div class="notification">
-            <label class="labelChange" for="Notification">Notification</label>
+            <p class="labelChange" for="Notification">Notification</p>
             <div class="btnNotifDiv">
                 <button class="btnNotif" id="btnON">ON</button>
                 <button class="btnNotif" id="btnOFF">OFF</button>

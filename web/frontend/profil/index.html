@@ -18,8 +18,8 @@
         <div class="loginDiv" id="login">
             <h2 class="h2Login">Login</h2>
             <form class="formLogin" id="formLogin">
-                <input type="text" name="usernameLogin" class="iptLogin" id="usernameLogin" placeholder="Username">
-                <input type="password" name="passwordLogin" class="iptLogin" id="passwordLogin" placeholder="Password">
+                <input type="text" name="usernameLogin" class="iptLogin" id="usernameLogin" placeholder="Username" autocomplete="username">
+                <input type="password" name="passwordLogin" class="iptLogin" id="passwordLogin" placeholder="Password" autocomplete="current-password">
                 <p class="pConstrainedPassword" id="constrainedPassword">[Need [12 - 64] characters, one capital letter, one lowercase letter, one number and one special character]</p>
                 <span id="errorLogin"></span>
                 <p class="pForgotPassword"> <a href="/forgotPassword">Forget Password</a></p>
@@ -32,10 +32,10 @@
         <div class="registerDiv" id="register">
             <h2 class="h2Register">Register</h2>
             <form class="formRegister" id="formRegister">
-                <input type="text"  name="usernameRegister" class="iptRegister" id="usernameRegister" placeholder="Username">
-                <input type="email" name="emailRegister" class="iptRegister" id="emailRegister" placeholder="Email">
-                <input type="password" name="passwordRegister" class="iptRegister" id="passwordRegister" placeholder="Password">
-                <input type="password" name="confirmPasswordRegister" class="iptRegister" id="confirmPasswordRegister" placeholder="Confirm Password">
+                <input type="text"  name="usernameRegister" class="iptRegister" id="usernameRegister" placeholder="Username" autocomplete="username">
+                <input type="email" name="emailRegister" class="iptRegister" id="emailRegister" placeholder="Email" autocomplete="email">
+                <input type="password" name="passwordRegister" class="iptRegister" id="passwordRegister" placeholder="Password" autocomplete="new-password">
+                <input type="password" name="confirmPasswordRegister" class="iptRegister" id="confirmPasswordRegister" placeholder="Confirm Password" autocomplete="new-password">
                 <p class="pConstrainedPassword" id="constrainedPassword">[Need [12 - 64] characters, one capital letter, one lowercase letter, one number and one special character]</p>
                 <span id="errorRegister"></span>
                 <input type="submit" value="Register" class="submitRegister" id="submitRegister">

@@ -4,7 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSubmit = document.getElementById('btnSubmit');
     const errorMessage = document.getElementById('errorMessage');
 
-    btnSubmit.addEventListener('click', async () => {
+    btnSubmit.addEventListener('click', async (event) => {
+        event.preventDefault();
+
         const paramUrl = window.location.search;
         const password = iptPassword.value;
         const confirmPassword = iptConfirmPassword.value;

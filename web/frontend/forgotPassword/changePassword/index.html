@@ -16,11 +16,14 @@
 
     <div class="main">
         <div class="changePassword">
-            <label class="labelPassword" for="Password">Change your Password</label>
-            <input type="password" class="iptChangePassword" id="iptPassword" placeholder="Password"/>
-            <input type="password" class="iptChangePassword" id="iptConfirmPassword" placeholder="Confirm Password"/>
-            <span id="errorMessage"></span>
-            <button class="btnSubmit" id="btnSubmit">Submit</button>
+            <form class="changePassword">
+                <p class="labelPassword" for="Password">Change your Password</p>
+                <input type="text" name="username-hidden" autocomplete="username" style="visibility: hidden; position: absolute; left: -9999px;">
+                <input type="password" class="iptChangePassword" id="iptPassword" placeholder="Password" autocomplete="new-password"/>
+                <input type="password" class="iptChangePassword" id="iptConfirmPassword" placeholder="Confirm Password" autocomplete="new-password"/>
+                <span id="errorMessage"></span>
+                <button class="btnSubmit" id="btnSubmit">Submit</button>
+            </form>
         </div>
 
     </div>

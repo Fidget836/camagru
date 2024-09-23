@@ -101,7 +101,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    btnPassword.addEventListener('click', async () => {
+    btnPassword.addEventListener('click', async (event) => {
+        event.preventDefault();
+
         const formDataPassword = new FormData;
         formDataPassword.append('user_id', sessionData.user_id);
         formDataPassword.append('password', iptPassword.value);
