@@ -10,10 +10,10 @@ To launch the project, simply :
 - touch .env
 - Copy/Paste this in the .env :
   
-`MYSQL_ROOT_PASSWORD=my-secret-pw
-MYSQL_DATABASE=camagru_db
-MYSQL_USER=camagru_user
-MYSQL_PASSWORD=user-secret-pw`
+`MYSQL_ROOT_PASSWORD=my-secret-pw`<br/>
+`MYSQL_DATABASE=camagru_db`<br/>
+`MYSQL_USER=camagru_user`<br/>
+`MYSQL_PASSWORD=user-secret-pw`
 - make
 
 Now the project is launched, you can access camagru on :
